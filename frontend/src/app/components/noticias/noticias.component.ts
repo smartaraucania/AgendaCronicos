@@ -9,6 +9,7 @@ import { TituloServiceService } from 'src/app/services/titulo-service.service';
 })
 export class NoticiasComponent implements OnInit {
   public noticias: any = [];
+  public buscando = true;
 
   constructor(
     private noticiasService: NoticiasService,
@@ -21,6 +22,7 @@ export class NoticiasComponent implements OnInit {
 
     this.noticiasService.getNoticiasByTwitter().subscribe(
       Response => {
+        this.buscando = false;
         this.noticias = Response;
       }
     );

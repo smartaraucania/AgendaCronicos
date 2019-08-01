@@ -11,6 +11,7 @@ import { AtencionService } from 'src/app/services/atencion.service';
 export class ProximasAtencionesComponent implements AfterViewInit, OnInit {
   public userLog: any = JSON.parse(localStorage.getItem('Usuario'));
   public atenciones: any[] = null;
+  public buscando = true;
 
   @ViewChild(MatPaginator, { static: false })
   public paginator: MatPaginator;
@@ -31,6 +32,7 @@ export class ProximasAtencionesComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     this.atencionService.getAtencionesProximasMedico(this.userLog.token).subscribe(
       Proximas => {
+        this.buscando = false;
         this.atenciones = Proximas;
         console.log(Proximas);
         this.dataSource = new DataTableAtencionesDataSource(this.atenciones);

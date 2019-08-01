@@ -11,6 +11,7 @@ import { MatTable, MatSort, MatPaginator } from '@angular/material';
 export class AtencionesMedicoComponent implements AfterViewInit, OnInit {
   public userLog: any = JSON.parse(localStorage.getItem('Usuario'));
   public atencionesHistorial: any[] = null;
+  public buscando = true;
 
   @ViewChild(MatPaginator, { static: false })
   public paginatorHist: MatPaginator;
@@ -31,6 +32,7 @@ export class AtencionesMedicoComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     this.atencionService.getAtencionesMedico(this.userLog.token).subscribe(
       Response => {
+        this.buscando = false;
         this.atencionesHistorial = Response;
         console.log(Response);
         this.dataSourceHist = new DataTableAtencionesDataSource(this.atencionesHistorial);
