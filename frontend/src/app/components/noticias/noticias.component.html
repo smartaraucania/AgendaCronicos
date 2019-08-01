@@ -1,0 +1,27 @@
+<mat-card *ngFor="let noticia of noticias" class="m-2 mat-elevation-z4 ">
+    <mat-card-header>
+        <img mat-card-avatar src="{{noticia.tweet.user.profile_image_url}}" alt="Photo of a Shiba Inu" align="middle">
+        <mat-card-title>
+            {{noticia.tweet.user.name}}
+        </mat-card-title>
+        <mat-card-subtitle>@{{noticia.tweet.user.screen_name}} <i>{{noticia.created_at_fecha}} {{noticia.created_at_hora}}</i></mat-card-subtitle>
+    </mat-card-header>
+
+
+    <mat-card-content>
+
+        <span>{{noticia.tweet.full_text}}</span>
+    </mat-card-content><br />
+    <div *ngFor="let image of noticia.tweet.entities.media" class="noticia mx-auto">
+        <img mat-card-image src="{{image.media_url}}" alt="Photo of a Shiba Inu">
+    </div>
+    <mat-card-actions align="right">
+
+        <div *ngFor="let image of noticia.tweet.entities.media">
+            <a mat-raised-button [href]="image.url" color="primary">
+                <i class="fab fa-twitter"></i>
+                <span style="margin-left: 8px;">Ver en twitter</span>
+            </a>
+        </div>
+    </mat-card-actions>
+</mat-card>

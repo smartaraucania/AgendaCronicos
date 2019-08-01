@@ -1,0 +1,14 @@
+<span mat-dialog-title>Finalizar atencion</span>
+<hr />
+<div mat-dialog-content>
+
+  <mat-form-field class="observacion-textarea">
+    <textarea matInput [(ngModel)]="data.observacion" cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="10"
+      placeholder="Observación" required></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align="center">
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <!-- <button mat-button [mat-dialog-close]="data.observacion" cdkFocusInitial>Finalizar</button> -->
+  <button mat-raised-button [mat-dialog-close]="data.observacion" cdkFocusInitial color="primary">Finalizar</button>
+</div>

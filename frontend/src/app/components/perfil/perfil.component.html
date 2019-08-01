@@ -1,0 +1,93 @@
+<mat-card class="m-2 mat-elevation-z4">
+    <mat-card-title>
+        Datos Usuario
+        <hr style="color: #0056b2;" />
+    </mat-card-title>
+
+    <mat-card-content>
+        <table style="width:70%">
+            <tr>
+                <td><span>Nombre:</span></td>
+                <td><span>{{userLog.nombre}} {{userLog.apellido}}</span></td>
+            </tr>
+            <tr>
+                <td><span>Rut:</span></td>
+                <td><span>{{userLog.rut}}</span></td>
+            </tr>
+            <tr>
+                <td><span>Correo:</span></td>
+                <td><span>{{userLog.correo}}</span></td>
+            </tr>
+            <tr>
+                <td><span>Telefono:</span></td>
+                <td><span>{{userLog.telefono}}</span></td>
+            </tr>
+            <tr *ngIf="userLog.rol==2">
+                <td><span>Dirección:</span></td>
+                <td><span>{{userLog.direccion}}</span></td>
+            </tr>
+            <tr *ngIf="userLog.rol==2">
+                <td><span>Fecha Nacimiento:</span></td>
+                <td><span>{{userLog.fechaNacimiento}}</span></td>
+            </tr>
+            <tr *ngIf="userLog.rol==2">
+                <td><span>Edad:</span></td>
+                <td><span>{{userLog.edad}}</span></td>
+            </tr>
+        </table>
+    </mat-card-content>
+</mat-card>
+<mat-card class="m-2 mat-elevation-z4">
+    <mat-card-title>
+        Datos Clinicos
+        <hr style="color: #0056b2;" />
+    </mat-card-title>
+
+    <mat-card-content>
+        <table style="width:80%">
+            <tr>
+                <td><span>Cesfam:</span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><span style="margin-left:15px;">Nombre:</span></td>
+                <td><span>{{userLog.cesfam.nombre}}</span></td>
+            </tr>
+            <tr>
+                <td><span style="margin-left:15px;">Direccion:</span></td>
+                <td><span>{{userLog.cesfam.direccion}}</span></td>
+            </tr>
+            <tr>
+                <td><span style="margin-left:15px;">Telefono:</span></td>
+                <td><span>{{userLog.cesfam.telefono}}</span></td>
+            </tr>
+            <tr *ngIf="userLog.rol==2">
+                <td><span>Enfermedad Cronica:</span></td>
+                <td><span>{{userLog.enfermedadCronica.enfermedad}}</span></td>
+            </tr>
+            <tr *ngIf="userLog.rol==2">
+                <td><span>Medico cabecera:</span></td>
+                <td></td>
+            </tr>
+            <tr *ngIf="userLog.rol==2">
+                <td><span style="margin-left:15px;">Nombre:</span></td>
+                <td><span> {{userLog.medicoCabecera.nombre}}
+                        {{userLog.medicoCabecera.apellido}}</span></td>
+            </tr>
+            <tr *ngIf="userLog.rol==2">
+                <td><span style="margin-left:15px;">Telefono:</span></td>
+                <td><span>{{userLog.medicoCabecera.telefono}}</span></td>
+            </tr>
+            <tr *ngIf="userLog.rol==2">
+                <td><span style="margin-left:15px;">Correo:</span></td>
+                <td><span>{{userLog.medicoCabecera.correo}}</span></td>
+            </tr>
+        </table>
+    </mat-card-content>
+</mat-card>
+
+<div style="position: fixed; right: 20px; bottom: 20px">
+    <button mat-fab color="primary" matTooltip="Editar Perfil" routerLink="/dashboard/editarPerfil">
+        <mat-icon>edit</mat-icon>
+    </button>
+</div>

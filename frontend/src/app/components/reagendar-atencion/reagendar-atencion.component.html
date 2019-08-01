@@ -1,0 +1,63 @@
+<span mat-dialog-title>Reagendar atencion</span>
+<hr />
+<form #formulario="ngForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+
+        <div class="row">
+            <div class="col-2">
+                <span>Justificación:</span><br />
+            </div>
+            <mat-form-field class="col-10">
+                <mat-label>Justificaciones</mat-label>
+                <mat-select name="justificacion" [(ngModel)]="objeto.justificacion" required>
+                    <mat-option *ngFor="let justificacion of justificaciones" [value]="justificacion._id">
+                        <span >{{justificacion.justificacion}}</span>
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div class="col-2">
+                <span>Observación:</span>
+            </div>
+            <mat-form-field class="col-10 observacion-textarea">
+                <textarea matInput name="observacion" [(ngModel)]="objeto.observacion" cdkTextareaAutosize
+                    cdkAutosizeMinRows="5" cdkAutosizeMaxRows="10" placeholder="Observación" required></textarea>
+            </mat-form-field>
+            <div class="col-2">
+                <span>Nueva fecha atención:</span>
+            </div>
+            <mat-form-field class="col-10">
+                <input name="fecha" [(ngModel)]="objeto.fecha" matInput [matDatepicker]="picker" [min]="minDate"
+                    placeholder="Seleccionar Fecha" (dateInput)="addEvent('input', $event)" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker disabled=false></mat-datepicker>
+            </mat-form-field>
+            <div class="col-2">
+                <span>Nueva hora atención:</span><br />
+            </div>
+            <mat-form-field class="col-10">
+                <mat-label>Horas Disponibles</mat-label>
+                <mat-select [disabled]="horas.length==0" name="hora" [(ngModel)]="objeto.hora" required>
+                    <mat-option *ngFor="let hora of horas" [disabled]="!hora.disp" [value]="hora.horaVista">
+                        <span *ngIf="!hora.disp" style="color: #a79f9e;">{{hora.horaVista}}</span>
+                        <span *ngIf="hora.disp">{{hora.horaVista}}</span>
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions align="center">
+        <div *ngIf="!ingresando">
+            <button mat-raised-button (click)="onNoClick()">
+                <mat-icon>cancel</mat-icon>
+                <span style="margin-left: 8px;">Cancelar</span>
+            </button>
+            <button type="submit" mat-raised-button color="primary">
+                <mat-icon>alarm_add</mat-icon>
+                <span style="margin-left: 8px;">Agendar Atención</span>
+            </button>
+        </div>
+        <div *ngIf="ingresando" class="justify-content-center d-flex">
+            <mat-spinner></mat-spinner>
+        </div>
+    </div>
+</form>

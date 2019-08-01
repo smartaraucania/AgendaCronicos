@@ -1,0 +1,69 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'push' : 'side'" [opened]="false">
+    <!-- [opened]="(isHandset$ | async) === false" -->
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/dashboard/">
+        <mat-icon style="margin-right:5px;" aria-label="Side nav toggle icon">home</mat-icon>
+        Inicio
+      </a>
+      <a mat-list-item routerLink="/dashboard/">
+        <mat-icon style="margin-right:5px;" aria-label="Side nav toggle icon">notifications</mat-icon>
+        Notificaciones
+      </a>
+      <a *ngIf="userLog.rol==1" mat-list-item routerLink="/dashboard/fichas">
+        <mat-icon style="margin-right:5px;" aria-label="Side nav toggle icon">assignment</mat-icon>
+        Mis Pacientes
+      </a>
+      <!-- Paciente -->
+      <a *ngIf="userLog.rol==2" mat-list-item routerLink="/dashboard/historial">
+        <mat-icon style="margin-right:5px;" aria-label="Side nav toggle icon">date_range</mat-icon>
+        Mis Atenciones
+      </a>
+      <!-- Medico -->
+      <a *ngIf="userLog.rol==1" mat-list-item routerLink="/dashboard/atenciones">
+        <mat-icon style="margin-right:5px;">date_range</mat-icon>
+        Mis Atenciones
+      </a>
+      <a mat-list-item routerLink="/dashboard/noticias">
+        <mat-icon style="margin-right:5px;">forum</mat-icon>
+        Noticias
+      </a>
+      <hr style="color: #0056b2;" />
+      <a mat-list-item routerLink="/dashboard/perfil">
+        <mat-icon style="margin-right:5px;">account_circle</mat-icon>
+        Perfil
+      </a>
+      <a mat-list-item routerLink="/dashboard/">
+        <mat-icon style="margin-right:5px;">settings</mat-icon>
+        Configuración
+      </a>
+
+
+      <a mat-list-item style="position: absolute; bottom: 20px;" (click)="cerrarSesion()">
+        <span style="color: blue;">Cerrar Sesión</span>
+      </a>
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <div *ngIf="parent == true">
+        <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+          >
+          <!-- *ngIf="isHandset$ | async" -->
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+      </div>
+      <div *ngIf="parent == false">
+        <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="backButton(rutaParent)">
+          <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
+        </button>
+      </div>
+      <span>{{titulo}}</span>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+    <!-- Add Content Here -->
+  </mat-sidenav-content>
+</mat-sidenav-container>

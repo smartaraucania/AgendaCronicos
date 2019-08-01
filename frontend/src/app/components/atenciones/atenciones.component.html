@@ -1,0 +1,29 @@
+<mat-accordion class="m-2 mat-elevation-z4">
+    <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = false" (closed)="panelOpenState = true">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <h3>Proximas Atenciones</h3>
+
+            </mat-panel-title>
+
+        </mat-expansion-panel-header>
+        <app-proximas-atenciones></app-proximas-atenciones>
+
+    </mat-expansion-panel>
+
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <h3>Historial Atenciones</h3>
+            </mat-panel-title>
+
+        </mat-expansion-panel-header>
+        <app-atenciones-medico></app-atenciones-medico>
+    </mat-expansion-panel>
+</mat-accordion>
+
+<div style="position: fixed; right: 20px; bottom: 20px">
+    <button mat-fab color="primary" matTooltip="Agendar Atención" routerLink="/dashboard/agendar">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>

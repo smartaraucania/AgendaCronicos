@@ -1,0 +1,19 @@
+.container {
+    width: 100%;/* height given for illustration */
+    display: flex;
+    flex-flow: row wrap;
+    position: relative;
+}
+  
+.item {
+    margin: 4px;
+    flex: 0 1 calc(45% - 8px); /* <-- adjusting for margin */
+}
+
+.ficha{
+    width: calc(100% - 15px);
+}
+ 
+.full-width-table {
+    width: 100%;
+}

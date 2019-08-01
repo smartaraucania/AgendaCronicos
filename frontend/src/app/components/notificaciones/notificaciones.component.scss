@@ -1,0 +1,11 @@
+.container {
+    width: 100%;/* height given for illustration */
+    display: flex;
+    flex-flow: row wrap;
+    position: relative;
+  }
+  
+  .item {
+    margin: 4px;
+    flex: 0 1 calc(100% - 8px); /* <-- adjusting for margin */
+  }
