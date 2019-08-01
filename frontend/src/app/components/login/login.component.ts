@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
   public constructor(
     private authService: AuthService,
     private usuarioService: UsuarioService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   public ngOnInit() {
@@ -41,6 +43,12 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['dashboard']);
             }
           );
+        },
+        Error => {
+          this.snackBar.open(Error.error.Error, 'X', {
+            duration: 5000,
+          });
+          this.ingresando = false;
         }
       );
     }

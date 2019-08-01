@@ -53,8 +53,18 @@ export class EditarPerfilComponent implements OnInit {
               this.snackBar.open('Perfil editado correctamente', 'X', {
                 duration: 5000,
               });
+            },
+            ErrorUser => {
+              this.snackBar.open(ErrorUser.error.Error, 'X', {
+                duration: 5000,
+              });
             }
           );
+        },
+        Error => {
+          this.snackBar.open(Error.error.Error, 'X', {
+            duration: 5000,
+          });
         }
       );
     }

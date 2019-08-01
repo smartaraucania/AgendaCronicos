@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { AtencionService } from 'src/app/services/atencion.service';
 import { PacienteService } from 'src/app/services/paciente.service';
 import { TituloServiceService } from 'src/app/services/titulo-service.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-agregar-paciente',
@@ -33,7 +34,8 @@ export class AgregarPacienteComponent implements OnInit {
     public cesfamService: CesfamService,
     public cronicaService: EnfermedadCronicaService,
     public pacienteService: PacienteService,
-    public tituloService: TituloServiceService
+    public tituloService: TituloServiceService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -68,6 +70,11 @@ export class AgregarPacienteComponent implements OnInit {
       this.pacienteService.createPaciente(this.userLog.token, this.objeto).subscribe(
         Response => {
           console.log(Response);
+        },
+        Error => {
+          this.snackBar.open(Error.error.Error, 'X', {
+            duration: 5000,
+          });
         }
       );
     }

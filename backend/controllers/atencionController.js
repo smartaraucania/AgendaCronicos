@@ -4,6 +4,11 @@ const moment = require('moment');
 const HistorialAtencion = require('../models/historialAtencion');
 
 //estados atencion = 0 agendada, 1 en transcurso, 2 finalizada, 3 cancelada, 4 re agendada
+/**
+ * Obtiene todas las horas para atencion disponibles del doctor en un dia determinado y en un rango de tiempo 
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getAtencionesDisponiblesDelDia(req, res) {
 
     var horasDisp = [];
@@ -37,7 +42,7 @@ function getAtencionesDisponiblesDelDia(req, res) {
             })
         );
         return Promise.all(promises).then(response => {
-            
+
             for (let i = 0; i < mediasHoras; i++) {
                 var horaMod = new Date(horaInicio);
                 horaMod.setMinutes(horaMod.getMinutes() + (30 * i));
@@ -45,7 +50,7 @@ function getAtencionesDisponiblesDelDia(req, res) {
                 var horaV = new Date(horaMod);
                 horaV.setHours(horaV.getHours() + 4);
                 var horaVista = moment(horaV).format('HH:mm');
-               
+
                 var disponible = true;
                 if (horasAgendadas.includes(horaMod.toString())) {
                     disponible = false;
@@ -69,6 +74,11 @@ function getAtencionesDisponiblesDelDia(req, res) {
     })
 }
 
+/**
+ * Obtiene todas las atenciones agendadas del doctor logeado al sistema
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getAtencionesAgendadasDoctorLogeado(req, res) {
     user.findById(req.user.id).exec((err, doctor) => {
         if (err) return res.status(400).send(err);
@@ -86,6 +96,11 @@ function getAtencionesAgendadasDoctorLogeado(req, res) {
     });
 }
 
+/**
+ * Obtiene todas las atenciones en transcurso del doctor logeado al sistema
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getAtencionesEnCursoDoctorLogeado(req, res) {
     user.findById(req.user.id).exec((err, doctor) => {
         if (err) return res.status(400).send(err);
@@ -103,6 +118,11 @@ function getAtencionesEnCursoDoctorLogeado(req, res) {
     });
 }
 
+/**
+ * Obtine todas las atenciones canceladas del doctor logeado al sistema
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getAtencionesCanceladasDoctorLogeado(req, res) {
     user.findById(req.user.id).exec((err, doctor) => {
         if (err) return res.status(400).send(err);
@@ -120,6 +140,11 @@ function getAtencionesCanceladasDoctorLogeado(req, res) {
     });
 }
 
+/**
+ * Obtiene todas las atenciones del paciente logeado al sistema
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getAtencionesPacienteLogeado(req, res) {
     user.findById(req.user.id).exec((err, paciente) => {
         if (err) return res.status(400).send(err);
@@ -127,7 +152,7 @@ function getAtencionesPacienteLogeado(req, res) {
 
         Atencion.find({
             paciente: req.user.id
-        }).populate('doctor paciente justificacion').exec((err, atenciones) => {
+        }).populate('doctor paciente justificacion').sort({ fechaFormat: 'desc' }).exec((err, atenciones) => {
             if (err) return res.status(400).send(err);
             if (!atenciones) return res.status(204).send({ 'Error': 'No existen atenciones registradas' });
 
@@ -136,6 +161,11 @@ function getAtencionesPacienteLogeado(req, res) {
     });
 }
 
+/**
+ * Obtiene todas las atenciones desde la fecha actual correspondientes al medico logeado
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getAtencionesProximasMedicoLogeado(req, res) {
     user.findById(req.user.id).exec((err, doctor) => {
         if (err) return res.status(400).send(err);
@@ -153,6 +183,11 @@ function getAtencionesProximasMedicoLogeado(req, res) {
     });
 }
 
+/**
+ * Obtiene todas las atenciones realizadas y por realizar del medico logeado
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getAtencionesMedicoLogeado(req, res) {
     user.findById(req.user.id).exec((err, doctor) => {
         if (err) return res.status(400).send(err);
@@ -169,6 +204,11 @@ function getAtencionesMedicoLogeado(req, res) {
     });
 }
 
+/**
+ * Obtiene todas las atenciones relacionadas a un paciente en especifico según su id
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getAtencionesPacientePorId(req, res) {
     user.findOne({
         _id: req.params.id,
@@ -188,6 +228,11 @@ function getAtencionesPacientePorId(req, res) {
     });
 }
 
+/**
+ * Obtiene la atencion activa del paciente (agendada, reagendada, en transcurso)
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getAtencionActivaPaciente(req, res) {
     user.findById(req.user.id).exec((err, usuario) => {
         if (err) return res.status(400).send(err);
@@ -197,7 +242,12 @@ function getAtencionActivaPaciente(req, res) {
             $or: [{
                 paciente: req.user.id,
                 estado: 0
-            }, {
+            },
+            {
+                paciente: req.user.id,
+                estado: 1
+            },
+            {
                 paciente: req.user.id,
                 estado: 4
             }]
@@ -210,6 +260,11 @@ function getAtencionActivaPaciente(req, res) {
     });
 }
 
+/**
+ * Obtiene una atencion especifica según su id
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getAtencionPorId(req, res) {
     Atencion.findById(req.params.id).populate('doctor paciente')
         .populate({ path: 'historialAtencion', options: { sort: { 'fechaFormatCambio': 'desc' } } })
@@ -221,6 +276,11 @@ function getAtencionPorId(req, res) {
         });
 }
 
+/**
+ * Permite al paciente agendar una hora para atención
+ * @param {*} req 
+ * @param {*} res 
+ */
 function agendarHoraPorPaciente(req, res) {
     var atencion = new Atencion({
         fecha: req.body.fecha,
@@ -232,7 +292,7 @@ function agendarHoraPorPaciente(req, res) {
         estado: 0,
         historialAtencion: []
     });
-    
+
     var fecha = new Date();
     var fechaActual = moment(Date.now());
 
@@ -251,36 +311,40 @@ function agendarHoraPorPaciente(req, res) {
     Atencion.findOne(
         {
             $or: [{
-                fecha: atencion.fecha,
-                hora: atencion.hora,
-                doctor: req.body.doctor,
+                paciente: req.user.id,
                 estado: 0
             }, {
-                fecha: atencion.fecha,
-                hora: atencion.hora,
-                doctor: req.body.doctor,
+                paciente: req.user.id,
                 estado: 4
-            }]
-        }).exec((err, atencionFound) => {
-            if (err) return res.status(400).send(err);
-            if (atencionFound) return res.status(200).send({ 'Error': 'Ya existe atencion agendada con esos parametros' });
-            if (difHoraria(atencion.fechaFormat) < 1) return res.status(404).send({ 'Error': 'Debe pedir atencion con almenos una hora de anticipación' });
+            }, {
+                paciente: req.user.id,
+                estado: 1
+            }
+            ]
+        }
+    ).exec((err, atAct) => {
+        if (err) return res.status(500).send(err);
+        if (atAct) return res.status(404).send({ 'Error': 'Paciente ya tiene atencion activa' });
 
-            historial.save((err, hist) => {
-                if (err) {
-                    if (err.code == 11000) {
-                        var field = err.message.split("index:")[1];
-                        field = field.split(" dup key")[0];
-                        field = field.substring(0, field.lastIndexOf("_"));
+        Atencion.findOne(
+            {
+                $or: [{
+                    fecha: atencion.fecha,
+                    hora: atencion.hora,
+                    doctor: req.body.doctor,
+                    estado: 0
+                }, {
+                    fecha: atencion.fecha,
+                    hora: atencion.hora,
+                    doctor: req.body.doctor,
+                    estado: 4
+                }]
+            }).exec((err, atencionFound) => {
+                if (err) return res.status(400).send(err);
+                if (atencionFound) return res.status(200).send({ 'Error': 'Ya existe atencion agendada con esos parametros' });
+                if (difHoraria(atencion.fechaFormat) < 1) return res.status(404).send({ 'Error': 'Debe pedir atencion con almenos una hora de anticipación' });
 
-                        return res.status(401).send({
-                            "Error": "Un error ha ocurrido con el " + field + ", ya existe."
-                        });
-                    }
-                }
-
-                atencion.historialAtencion.push(hist);
-                atencion.save((err, atencion) => {
+                historial.save((err, hist) => {
                     if (err) {
                         if (err.code == 11000) {
                             var field = err.message.split("index:")[1];
@@ -292,12 +356,32 @@ function agendarHoraPorPaciente(req, res) {
                             });
                         }
                     }
-                    return res.status(201).send(atencion);
-                });
+
+                    atencion.historialAtencion.push(hist);
+                    atencion.save((err, atencion) => {
+                        if (err) {
+                            if (err.code == 11000) {
+                                var field = err.message.split("index:")[1];
+                                field = field.split(" dup key")[0];
+                                field = field.substring(0, field.lastIndexOf("_"));
+
+                                return res.status(401).send({
+                                    "Error": "Un error ha ocurrido con el " + field + ", ya existe."
+                                });
+                            }
+                        }
+                        return res.status(201).send(atencion);
+                    });
+                })
             })
-        })
+    })
 }
 
+/**
+ * Permite al doctor logeado asignarle una hora de atención a un paciente
+ * @param {*} req 
+ * @param {*} res 
+ */
 function agendarHoraPorDoctor(req, res) {
     var atencion = new Atencion({
         fecha: req.body.fecha,
@@ -328,52 +412,77 @@ function agendarHoraPorDoctor(req, res) {
     Atencion.findOne(
         {
             $or: [{
-                fecha: atencion.fecha,
-                hora: atencion.hora,
-                doctor: req.user.id,
+                paciente: req.body.paciente,
                 estado: 0
             }, {
-                fecha: atencion.fecha,
-                hora: atencion.hora,
-                doctor: req.user.id,
+                paciente: req.body.paciente,
                 estado: 4
-            }]
-        }).exec((err, atencionFound) => {
-            if (err) return res.status(400).send(err);
-            if (atencionFound) return res.status(200).send({ 'Error': 'Ya existe atencion agendada con esos parametros' })
-            difHoraria(atencion.fechaFormat);
-            historial.save((err, hist) => {
-                if (err) {
-                    if (err.code == 11000) {
-                        var field = err.message.split("index:")[1];
-                        field = field.split(" dup key")[0];
-                        field = field.substring(0, field.lastIndexOf("_"));
+            }, {
+                paciente: req.body.paciente,
+                estado: 1
+            }
+            ]
+        }
+    ).exec((err, atAct) => {
+        if (err) return res.status(500).send(err);
+        if (atAct) return res.status(404).send({ 'Error': 'Paciente ya tiene atencion activa' });
 
-                        return res.status(401).send({
-                            "Error": "Un error ha ocurrido con el " + field + ", ya existe."
-                        });
-                    }
-                }
 
-                atencion.historialAtencion.push(hist);
-
-                atencion.save((err, atencion) => {
+        Atencion.findOne(
+            {
+                $or: [{
+                    fecha: atencion.fecha,
+                    hora: atencion.hora,
+                    doctor: req.user.id,
+                    estado: 0
+                }, {
+                    fecha: atencion.fecha,
+                    hora: atencion.hora,
+                    doctor: req.user.id,
+                    estado: 4
+                }]
+            }).exec((err, atencionFound) => {
+                if (err) return res.status(400).send(err);
+                if (atencionFound) return res.status(200).send({ 'Error': 'Ya existe atencion agendada con esos parametros' })
+                difHoraria(atencion.fechaFormat);
+                historial.save((err, hist) => {
                     if (err) {
                         if (err.code == 11000) {
                             var field = err.message.split("index:")[1];
                             field = field.split(" dup key")[0];
                             field = field.substring(0, field.lastIndexOf("_"));
+
                             return res.status(401).send({
                                 "Error": "Un error ha ocurrido con el " + field + ", ya existe."
                             });
                         }
                     }
-                    return res.status(201).send(atencion);
-                });
+
+                    atencion.historialAtencion.push(hist);
+
+                    atencion.save((err, atencion) => {
+                        if (err) {
+                            if (err.code == 11000) {
+                                var field = err.message.split("index:")[1];
+                                field = field.split(" dup key")[0];
+                                field = field.substring(0, field.lastIndexOf("_"));
+                                return res.status(401).send({
+                                    "Error": "Un error ha ocurrido con el " + field + ", ya existe."
+                                });
+                            }
+                        }
+                        return res.status(201).send(atencion);
+                    });
+                })
             })
-        })
+    })
 }
 
+/**
+ * Permite al usuario logeado cancelar una atención agendada o reagendada
+ * @param {*} req 
+ * @param {*} res 
+ */
 function cancelarAtencion(req, res) {
     var fecha = new Date();
     var fechaActual = moment(Date.now());
@@ -382,7 +491,7 @@ function cancelarAtencion(req, res) {
     var horaCambio = fechaActual.format('HH:mm');
 
     fecha.setHours(fecha.getHours() - 4);
-    
+
 
     var historial = new HistorialAtencion({
         fechaCambio: fechaCambio,
@@ -391,7 +500,7 @@ function cancelarAtencion(req, res) {
         estado: 3,
         cambiadoPor: req.user.rol
     });
-    
+
     Atencion.findById(req.params.id).exec((err, atencion) => {
         if (err) return res.status(400).send(err);
         if (!atencion) return res.status(200).send({ 'Error': 'No existe atencion con esa id' });
@@ -424,6 +533,11 @@ function cancelarAtencion(req, res) {
     });
 }
 
+/**
+ * Permite al doctor logeado finalizar una atención en transcurso
+ * @param {*} req 
+ * @param {*} res 
+ */
 function finalizarAtencion(req, res) {
     var fecha = new Date();
     var fechaActual = moment(Date.now());
@@ -432,7 +546,6 @@ function finalizarAtencion(req, res) {
     var horaCambio = fechaActual.format('HH:mm');
 
     fecha.setHours(fecha.getHours() - 4);
-    console.log(fecha);
 
     var historial = new HistorialAtencion({
         fechaCambio: fechaCambio,
@@ -480,6 +593,11 @@ function finalizarAtencion(req, res) {
     });
 }
 
+/**
+ * Permite al doctor logeado iniciar una atencion agendada
+ * @param {*} req 
+ * @param {*} res 
+ */
 function iniciarAtencion(req, res) {
     var fecha = new Date();
     var fechaActual = moment(Date.now());
@@ -536,6 +654,11 @@ function iniciarAtencion(req, res) {
         });
 }
 
+/**
+ * Permite al usuario logeado reagendar una atencion agendada o ya reagendada
+ * @param {*} req 
+ * @param {*} res 
+ */
 function reagendarAtencion(req, res) {
     var fecha = new Date();
     var fechaActual = moment(Date.now());
@@ -565,7 +688,7 @@ function reagendarAtencion(req, res) {
         }).exec((err, atencion) => {
             if (err) return res.status(400).send(err);
             if (!atencion) return res.status(200).send({ 'Error': 'No existe atencion con esa id' });
-           
+
 
             historial.save((err) => {
                 if (err) {
@@ -581,14 +704,14 @@ function reagendarAtencion(req, res) {
                 }
 
                 atencion.fecha = req.body.fecha,
-                atencion.fechaFormat = req.body.fecha + 'T' + req.body.hora + ':00.000Z',
-                atencion.hora = req.body.hora
+                    atencion.fechaFormat = req.body.fecha + 'T' + req.body.hora + ':00.000Z',
+                    atencion.hora = req.body.hora
                 atencion.historialAtencion.push(historial);
                 atencion.justificacion = req.body.justificacion;
                 atencion.observacion_justificacion = req.body.observacion_justificacion;
                 atencion.estado = 4;
                 difHoraria(atencion.fechaFormat);
-                
+
                 atencion.save((err) => {
                     if (err) return res.status(401).send({ 'Error': "Un error ha ocurrido con la Base de datos" });
 
@@ -601,6 +724,10 @@ function reagendarAtencion(req, res) {
 
 }
 
+/**
+ * Permite calcular la diferencia horaria entre la hora actual y una hora determinada
+ * @param {*} hora 
+ */
 function difHoraria(hora) {
     hora.setHours(hora.getHours() + 4);
     //La diferencia se da en milisegundos así que debes dividir entre 1000
@@ -610,6 +737,11 @@ function difHoraria(hora) {
     return fecha2.diff(fecha1, 'hours');
 }
 
+/**
+ * Permite calcular cuantas medias horas hay entre dos horas determinadas
+ * @param {*} horaInicio 
+ * @param {*} horaFin 
+ */
 function difHorariaPorMediaHora(horaInicio, horaFin) {
     var fecha1 = moment(horaInicio);
     var fecha2 = moment(horaFin);
@@ -621,12 +753,12 @@ function difHorariaPorMediaHora(horaInicio, horaFin) {
 
 module.exports = {
     getAtencionesPacienteLogeado,
-    getAtencionesMedicoLogeado, //*rol
+    getAtencionesMedicoLogeado, 
     getAtencionesProximasMedicoLogeado,
-    getAtencionActivaPaciente, //rol
-    getAtencionesAgendadasDoctorLogeado, //* rol
-    getAtencionesEnCursoDoctorLogeado, //* rol
-    getAtencionesCanceladasDoctorLogeado, //*rol
+    getAtencionActivaPaciente, 
+    getAtencionesAgendadasDoctorLogeado, 
+    getAtencionesEnCursoDoctorLogeado, 
+    getAtencionesCanceladasDoctorLogeado, 
     getAtencionesPacientePorId,
     agendarHoraPorPaciente,
     agendarHoraPorDoctor,

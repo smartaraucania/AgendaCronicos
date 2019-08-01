@@ -73,9 +73,19 @@ export class AgendarAtencionComponent implements OnInit {
                     duration: 5000,
                   });
                   this.router.navigate(['dashboard/atenciones']);
+                },
+                Error => {
+                  this.snackBar.open(Error.error.Error, 'X', {
+                    duration: 5000,
+                  });
                 }
               );
             }
+          },
+          Error => {
+            this.snackBar.open(Error.error.Error, 'X', {
+              duration: 5000,
+            });
           }
         );
       } else if (this.userLog.rol === 2) {
@@ -87,6 +97,11 @@ export class AgendarAtencionComponent implements OnInit {
                 duration: 5000,
               });
               this.router.navigate(['dashboard/historial']);
+            },
+            Error => {
+              this.snackBar.open(Error.error.Error, 'X', {
+                duration: 5000,
+              });
             }
           );
       }

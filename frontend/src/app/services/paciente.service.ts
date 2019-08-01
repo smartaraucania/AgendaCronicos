@@ -13,7 +13,13 @@ export class PacienteService {
   ) { }
 
   public getPacientePorRut(rut: string): Observable<any> {
-    return this.http.get(this.url + 'public/paciente/rut/' + rut, { observe: 'response' });
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.get(this.url + 'public/paciente/rut/' + rut, httpOptions);
   }
 
   public getPacientePorId(id: string): Observable<any> {

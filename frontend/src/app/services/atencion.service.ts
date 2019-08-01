@@ -172,7 +172,7 @@ export class AtencionService {
 
     const params = {
       fecha: fechaConsulta,
-      horaInicio: '15:00',
+      horaInicio: '10:00',
       horaFin: '20:30',
       doctor: idDoctor
     };

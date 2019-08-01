@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { MatPaginator, MatSort, MatTable } from '@angular/material';
+import { MatPaginator, MatSort, MatTable, MatSnackBar } from '@angular/material';
 import { DataTableFichaDataSource } from './fichas-datasource';
 import { MedicoService } from 'src/app/services/medico.service';
 import { PacienteService } from 'src/app/services/paciente.service';
@@ -29,7 +29,8 @@ export class FichasComponent implements AfterViewInit, OnInit {
   public constructor(
     private medicoService: MedicoService,
     private pacienteService: PacienteService,
-    private tituloService: TituloServiceService
+    private tituloService: TituloServiceService,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -46,6 +47,12 @@ export class FichasComponent implements AfterViewInit, OnInit {
         this.dataSource.paginator = this.paginator;
         this.table.dataSource = this.dataSource;
 
+      },
+      Error => {
+        console.log(Error);
+        this.snackBar.open(Error.error.Error, 'X', {
+          duration: 5000,
+        });
       }
     );
   }
@@ -56,16 +63,18 @@ export class FichasComponent implements AfterViewInit, OnInit {
       this.pacientes = [];
       this.pacienteService.getPacientePorRut(this.rut).subscribe(
         Response => {
-          if (Response.status === 200) {
-            this.pacientes.push(Response.body);
-          } else {
-            this.pacientes = [];
+          if (Response != null) {
+            this.pacientes.push(Response);
           }
           this.dataSource = new DataTableFichaDataSource(this.pacientes);
           this.dataSource.sort = this.sort;
           this.dataSource.paginator = this.paginator;
           this.table.dataSource = this.dataSource;
-
+        },
+        Error => {
+          this.snackBar.open(Error.error.Error, 'X', {
+            duration: 5000,
+          });
         }
       );
     }
