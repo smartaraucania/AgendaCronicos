@@ -6,6 +6,7 @@ import { NgForm } from '@angular/forms';
 import { PacienteService } from 'src/app/services/paciente.service';
 import { Router } from '@angular/router';
 import { TituloServiceService } from 'src/app/services/titulo-service.service';
+import { NotificacionService } from 'src/app/services/notificacion.service';
 
 @Component({
   selector: 'app-agendar-atencion',
@@ -16,6 +17,12 @@ export class AgendarAtencionComponent implements OnInit {
   public horas: any[] = [];
   public minDate = new Date();
   public userLog: any = JSON.parse(localStorage.getItem('Usuario'));
+
+  // variables notificacion;
+  fechaFormatNow: string;
+  horaFormatNow: string;
+  notifTitulo: string;
+  notifText: string;
 
   public objeto: any = {};
 
@@ -28,7 +35,8 @@ export class AgendarAtencionComponent implements OnInit {
     private pacienteService: PacienteService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private tituloService: TituloServiceService
+    private tituloService: TituloServiceService,
+    private notificacionService: NotificacionService
   ) { }
 
   ngOnInit() {
@@ -65,22 +73,39 @@ export class AgendarAtencionComponent implements OnInit {
       if (this.userLog.rol === 1) {
         this.pacienteService.getPacientePorRut(this.objeto.rut).subscribe(
           Response => {
-            if (Response.status === 200) {
-              const fechaFormat = moment(this.objeto.fecha).format('YYYY-MM-DD');
-              this.atencionService.agendarAtencionPorDoctor(this.userLog.token, fechaFormat, this.objeto.hora, Response.body._id).subscribe(
-                ResponseAtencion => {
-                  this.snackBar.open('Atencion agendada correctamente', 'X', {
-                    duration: 5000,
-                  });
-                  this.router.navigate(['dashboard/atenciones']);
-                },
-                Error => {
-                  this.snackBar.open(Error.error.Error, 'X', {
-                    duration: 5000,
-                  });
-                }
-              );
-            }
+            const fechaFormat = moment(this.objeto.fecha).format('YYYY-MM-DD');
+            this.atencionService.agendarAtencionPorDoctor(this.userLog.token, fechaFormat, this.objeto.hora, Response._id).subscribe(
+              ResponseAtencion => {
+
+                this.fechaFormatNow = moment(Date.now()).format('YYYY-MM-DD');
+                this.horaFormatNow = moment(Date.now()).format('HH:mm');
+                this.notifTitulo = 'Atención Agendada';
+                this.notifText = 'Doctor ' + this.userLog.nombre + ' ' + this.userLog.apellido +
+                  ' ha agendado hora de atención para el día ' + fechaFormat + ' a las ' + this.objeto.hora +
+                  '. Revisar "mis atenciones" para más detalle.';
+
+                this.notificacionService.createNotificacionDoctor(
+                  this.notifTitulo, this.notifText, Response._id,
+                  this.horaFormatNow, this.fechaFormatNow, ResponseAtencion._id).subscribe(
+                    ResponseNotif => {
+                      console.log(ResponseNotif);
+                      console.log('notificacion creada');
+                    },
+                    ErrorNotif => {
+                      console.log(ErrorNotif);
+                    }
+                  );
+                this.snackBar.open('Atencion agendada correctamente', 'X', {
+                  duration: 5000,
+                });
+                this.router.navigate(['dashboard/atenciones']);
+              },
+              Error => {
+                this.snackBar.open(Error.error.Error, 'X', {
+                  duration: 5000,
+                });
+              }
+            );
           },
           Error => {
             this.snackBar.open(Error.error.Error, 'X', {
@@ -93,6 +118,25 @@ export class AgendarAtencionComponent implements OnInit {
         this.atencionService.agendarAtencionPorPaciente(this.userLog.token, fechaFormat, this.objeto.hora, this.userLog.medicoCabecera._id)
           .subscribe(
             Response => {
+              this.fechaFormatNow = moment(Date.now()).format('YYYY-MM-DD');
+              this.horaFormatNow = moment(Date.now()).format('HH:mm');
+              this.notifTitulo = 'Atención Agendada';
+              this.notifText = 'Paciente ' + this.userLog.nombre + ' ' + this.userLog.apellido +
+                ' ha agendado hora de atención para el día ' + fechaFormat + ' a las ' + this.objeto.hora +
+                '. Revisar "mis atenciones" para más detalle.';
+
+              this.notificacionService.createNotificacionPaciente(
+                this.notifTitulo, this.notifText, this.userLog.medicoCabecera._id,
+                this.horaFormatNow, this.fechaFormatNow, Response._id).subscribe(
+                  ResponseNotif => {
+                    console.log(ResponseNotif);
+                    console.log('notificacion creada');
+                  },
+                  ErrorNotif => {
+                    console.log(ErrorNotif);
+                  }
+                );
+
               this.snackBar.open('Atencion agendada correctamente', 'X', {
                 duration: 5000,
               });
@@ -107,5 +151,6 @@ export class AgendarAtencionComponent implements OnInit {
       }
 
     }
+
   }
 }

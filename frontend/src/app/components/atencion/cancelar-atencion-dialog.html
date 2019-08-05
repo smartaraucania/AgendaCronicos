@@ -1,0 +1,40 @@
+<span mat-dialog-title>Cancelar atención</span>
+<hr />
+<form #formulario="ngForm" (ngSubmit)="submit()">
+    <div mat-dialog-content>
+
+        <div class="row">
+            <div class="col-2">
+                <span>Justificación:</span>
+            </div>
+            <mat-form-field class="col-10">
+                <mat-label>Justificaciones</mat-label>
+                <mat-select name="justificacion" [(ngModel)]="objeto.justificacion" required>
+                    <mat-option *ngFor="let justificacion of justificaciones" [value]="justificacion._id">
+                        <span>{{justificacion.justificacion}}</span>
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div class="col-2">
+                <span>Observación:</span>
+            </div>
+            <mat-form-field class="col-10 observacion-textarea">
+                <textarea matInput name="observacion" [(ngModel)]="objeto.observacion" cdkTextareaAutosize
+                    cdkAutosizeMinRows="5" cdkAutosizeMaxRows="10" placeholder="Observación" required></textarea>
+            </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions align="center">
+        <div *ngIf="!ingresando">
+            <button mat-raised-button (click)="onNoClick()">
+                <span style="margin-left: 8px;">Cancelar</span>
+            </button>
+            <button type="submit" mat-raised-button color="primary">
+                <span style="margin-left: 8px;">Cancelar Atención</span>
+            </button>
+        </div>
+        <div *ngIf="ingresando" class="justify-content-center d-flex">
+            <mat-spinner></mat-spinner>
+        </div>
+    </div>
+</form>

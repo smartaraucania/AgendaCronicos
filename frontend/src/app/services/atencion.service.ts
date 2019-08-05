@@ -89,14 +89,19 @@ export class AtencionService {
    * @param token token de acceso del usuario logeado
    * @param id id de la atencion a cancelar
    */
-  public cancelarAtencion(token: string, id: string): Observable<any> {
+  public cancelarAtencion(token: string, id: string, observacionInput: string, justificacionInput: string): Observable<any> {
+    const params = {
+      justificacion: justificacionInput,
+      observacion_justificacion: observacionInput
+    };
+
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
       })
     };
-    return this.http.put(this.url + 'protected/atencion/' + id + '/cancelar', null, httpOptions);
+    return this.http.put(this.url + 'protected/atencion/' + id + '/cancelar', params, httpOptions);
   }
 
   /**

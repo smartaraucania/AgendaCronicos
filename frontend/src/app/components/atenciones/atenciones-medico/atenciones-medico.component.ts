@@ -34,13 +34,10 @@ export class AtencionesMedicoComponent implements AfterViewInit, OnInit {
       Response => {
         this.buscando = false;
         this.atencionesHistorial = Response;
-        console.log(Response);
         this.dataSourceHist = new DataTableAtencionesDataSource(this.atencionesHistorial);
         this.dataSourceHist.sort = this.sortHist;
         this.dataSourceHist.paginator = this.paginatorHist;
-        console.log(this.dataSourceHist);
         this.tableHist.dataSource = this.dataSourceHist;
-        console.log(this.tableHist);
       });
   }
 

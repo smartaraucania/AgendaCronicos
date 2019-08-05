@@ -1,31 +1,17 @@
 <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
 
-    <mat-card class="m-2 mat-elevation-z4 mx-auto item">
-        <mat-card-title>Ficha</mat-card-title>
-        <hr style="color: #0056b2;" />
-        <mat-card-subtitle></mat-card-subtitle>
+    <mat-card *ngFor="let notificacion of notificaciones" class="m-2 mat-elevation-z4 mx-auto item" routerLink="/dashboard/atencion/{{notificacion.atencion}}" >
+        <mat-card-title>{{notificacion.titulo}}</mat-card-title>
+        <mat-card-subtitle><i>{{notificacion.fecha_creacion}} {{notificacion.hora_creacion}}</i></mat-card-subtitle>
         <mat-card-content>
-            <div class="row">
-                <div class="col-sm">
-                    <span><strong>Rut</strong></span><br />
-                    <span></span>
-                </div>
-                <div class="col-sm">
-                    <span><strong>Cesfam</strong></span><br />
-                    <span></span>
-                </div>
-                <div class="col-sm">
-                    <span><strong>Doctor</strong></span><br />
-                    <span></span>
-                </div>
-            </div>
+            {{notificacion.texto}}
         </mat-card-content>
         <mat-card-actions align="center">
-            <button color="primary" matTooltip="Ver Ficha" mat-raised-button
+            <!-- <button color="primary" matTooltip="Ver Ficha" mat-raised-button
                 routerLink="/dashboard/">
                 <mat-icon>assignment</mat-icon>
                 <span style="margin-left:8px;">Ficha</span>
-            </button>
+            </button> -->
         </mat-card-actions>
     </mat-card>
 

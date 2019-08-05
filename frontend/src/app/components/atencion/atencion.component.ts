@@ -4,9 +4,17 @@ import { ActivatedRoute } from '@angular/router';
 import { DataTableAtencionDataSource } from './atencion-datasource';
 import { MatTable, MatSort, MatPaginator, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ReagendarAtencionComponent } from '../reagendar-atencion/reagendar-atencion.component';
+import * as moment from 'moment';
+import { NotificacionService } from 'src/app/services/notificacion.service';
+import { NgForm } from '@angular/forms';
+import { JustificacionesService } from 'src/app/services/justificaciones.service';
 
 export interface DialogData {
   observacion: string;
+}
+
+export interface DialogCancelData {
+  atencion: any;
 }
 
 @Component({
@@ -22,12 +30,19 @@ export class AtencionComponent implements AfterViewInit, OnInit {
 
   displayedColumns = ['estado', 'cambiadoPor', 'horaCambio'];
 
+  // variables notificacion;
+  fechaFormatNow: string;
+  horaFormatNow: string;
+  notifTitulo: string;
+  notifText: string;
+
   public userLog: any = JSON.parse(localStorage.getItem('Usuario'));
   public atencion: any = null;
   public historial: any[] = null;
   public observacion: string;
 
   constructor(
+    private notificacionService: NotificacionService,
     private atencionService: AtencionService,
     private route: ActivatedRoute,
     public finalizarDialog: MatDialog
@@ -57,7 +72,8 @@ export class AtencionComponent implements AfterViewInit, OnInit {
       width: '90%',
       data: {
         id_atencion: this.route.snapshot.params.id,
-        token_user: this.userLog.token
+        token_user: this.userLog.token,
+        atencion: this.atencion
       }
     });
 
@@ -85,6 +101,23 @@ export class AtencionComponent implements AfterViewInit, OnInit {
       if (this.observacion != null) {
         this.atencionService.finalizarAtencion(this.userLog.token, this.route.snapshot.params.id, this.observacion).subscribe(
           Response => {
+            if (this.userLog.rol === 1) {
+              this.fechaFormatNow = moment(Date.now()).format('YYYY-MM-DD');
+              this.horaFormatNow = moment(Date.now()).format('HH:mm');
+              this.notifTitulo = 'Atención Finalizada';
+              this.notifText = 'Doctor ' + this.userLog.nombre + ' ' + this.userLog.apellido +
+                ' ha finalizado la hora de atención del día ' + this.atencion.fecha + ' a las ' + this.atencion.hora +
+                '. Revisar "mis atenciones" para más detalle.';
+
+              this.notificacionService.createNotificacionDoctor(
+                this.notifTitulo, this.notifText, this.atencion.paciente._id,
+                this.horaFormatNow, this.fechaFormatNow, Response._id).subscribe(
+                  ResponseNotif => {
+                    console.log('notificacion creada');
+                  }
+                );
+            }
+
             this.ngOnInit();
             this.ngAfterViewInit();
           }
@@ -92,22 +125,48 @@ export class AtencionComponent implements AfterViewInit, OnInit {
       } else {
         console.log("ya valistes");
       }
-      console.log(result);
+
     });
   }
 
-  cancelarAtencion() {
-    this.atencionService.cancelarAtencion(this.userLog.token, this.route.snapshot.params.id).subscribe(
-      Response => {
+  openCancelDialog(): void {
+    const dialogRef = this.finalizarDialog.open(CancelarAtencionDialogComponent, {
+      width: '90%',
+      data: { atencion: this.atencion }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.observacion = result;
+      if (result) {
         this.ngOnInit();
         this.ngAfterViewInit();
+      } else {
+        console.log('ya valistes');
       }
-    );
+    });
+
   }
 
   iniciarAtencion() {
     this.atencionService.iniciarAtencion(this.userLog.token, this.route.snapshot.params.id).subscribe(
       Response => {
+        if (this.userLog.rol === 1) {
+          this.fechaFormatNow = moment(Date.now()).format('YYYY-MM-DD');
+          this.horaFormatNow = moment(Date.now()).format('HH:mm');
+          this.notifTitulo = 'Atención Iniciada';
+          this.notifText = 'Doctor ' + this.userLog.nombre + ' ' + this.userLog.apellido +
+            ' ha iniciado la hora de atención del día ' + this.atencion.fecha + ' a las ' + this.atencion.hora +
+            '. Revisar "mis atenciones" para más detalle.';
+
+          this.notificacionService.createNotificacionDoctor(
+            this.notifTitulo, this.notifText, this.atencion.paciente._id,
+            this.horaFormatNow, this.fechaFormatNow, Response._id).subscribe(
+              ResponseNotif => {
+                console.log('notificacion creada');
+              }
+            );
+        }
+
         this.ngOnInit();
         this.ngAfterViewInit();
       }
@@ -134,6 +193,103 @@ export class FinalizarAtencionDialogComponent {
 
   click() {
 
+  }
+
+}
+
+@Component({
+  selector: 'app-cancelar-atencion-dialog',
+  templateUrl: './cancelar-atencion-dialog.html',
+  styleUrls: ['./atencion.component.scss']
+})
+export class CancelarAtencionDialogComponent implements OnInit {
+
+  public userLog: any = JSON.parse(localStorage.getItem('Usuario'));
+  public justificaciones: any = [];
+  public objeto: any = {};
+
+  // variables notificacion;
+  fechaFormatNow: string;
+  horaFormatNow: string;
+  notifTitulo: string;
+  notifText: string;
+
+  @ViewChild('formulario', { static: true })
+  public formulario: NgForm;
+  public ingresando: boolean;
+
+  constructor(
+    private atencionService: AtencionService,
+    private notificacionService: NotificacionService,
+    private justificacionService: JustificacionesService,
+    public dialogRef: MatDialogRef<CancelarAtencionDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogCancelData
+  ) { }
+
+  ngOnInit() {
+    if (this.userLog.rol === 1) {
+      this.justificacionService.getJustificacionesDoctor().subscribe(
+        Response => {
+          this.justificaciones = Response;
+        }
+      );
+    } else if (this.userLog.rol === 2) {
+      this.justificacionService.getJustificacionesPaciente().subscribe(
+        Response => {
+          this.justificaciones = Response;
+        }
+      );
+    }
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  submit() {
+    if (this.formulario.valid) {
+      this.atencionService.cancelarAtencion(
+        this.userLog.token, this.data.atencion._id, this.objeto.observacion, this.objeto.justificacion).subscribe(
+          Response => {
+            if (this.userLog.rol === 1) {
+              this.fechaFormatNow = moment(Date.now()).format('YYYY-MM-DD');
+              this.horaFormatNow = moment(Date.now()).format('HH:mm');
+              this.notifTitulo = 'Atención Cancelada';
+              this.notifText = 'Doctor ' + this.userLog.nombre + ' ' + this.userLog.apellido +
+                ' ha cancelado la hora de atención del día ' + this.data.atencion.fecha + ' a las ' + this.data.atencion.hora +
+                '. Revisar "mis atenciones" para más detalle.';
+
+              this.notificacionService.createNotificacionDoctor(
+                this.notifTitulo, this.notifText, this.data.atencion.paciente._id,
+                this.horaFormatNow, this.fechaFormatNow, Response._id).subscribe(
+                  ResponseNotif => {
+                    console.log('notificacion creada');
+                  }
+                );
+            } else if (this.userLog.rol === 2) {
+              this.fechaFormatNow = moment(Date.now()).format('YYYY-MM-DD');
+              this.horaFormatNow = moment(Date.now()).format('HH:mm');
+              this.notifTitulo = 'Atención Cancelada';
+              this.notifText = 'Paciente ' + this.userLog.nombre + ' ' + this.userLog.apellido +
+                ' ha cancelado la hora de atención del día ' + this.data.atencion.fecha + ' a las ' + this.data.atencion.hora +
+                '. Revisar "mis atenciones" para más detalle.';
+
+              this.notificacionService.createNotificacionPaciente(
+                this.notifTitulo, this.notifText, this.data.atencion.doctor._id,
+                this.horaFormatNow, this.fechaFormatNow, Response._id).subscribe(
+                  ResponseNotif => {
+                    console.log('notificacion creada');
+                  }
+                );
+            }
+            this.dialogRef.close(true);
+          },
+          Error => {
+            console.log(Error);
+            this.dialogRef.close(true);
+          }
+        );
+    }
   }
 
 }

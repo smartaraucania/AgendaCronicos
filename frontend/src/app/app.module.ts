@@ -33,7 +33,10 @@ import { FichasComponent } from './components/fichas/fichas.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { HistorialComponent } from './components/historial/historial.component';
 import { FichaComponent } from './components/ficha/ficha.component';
-import { AtencionComponent, FinalizarAtencionDialogComponent } from './components/atencion/atencion.component';
+import {
+  AtencionComponent, FinalizarAtencionDialogComponent,
+  CancelarAtencionDialogComponent
+} from './components/atencion/atencion.component';
 import { DataTableExampleComponent } from './data-table-example/data-table-example.component';
 import { AtencionesComponent } from './components/atenciones/atenciones.component';
 import { AgendarAtencionComponent } from './components/agendar-atencion/agendar-atencion.component';
@@ -65,7 +68,8 @@ import { ReagendarAtencionComponent } from './components/reagendar-atencion/reag
     AtencionesMedicoComponent,
     EditarPerfilComponent,
     NoticiasComponent,
-    ReagendarAtencionComponent
+    ReagendarAtencionComponent,
+    CancelarAtencionDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -98,7 +102,8 @@ import { ReagendarAtencionComponent } from './components/reagendar-atencion/reag
   ],
   entryComponents: [
     FinalizarAtencionDialogComponent,
-    ReagendarAtencionComponent
+    ReagendarAtencionComponent,
+    CancelarAtencionDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

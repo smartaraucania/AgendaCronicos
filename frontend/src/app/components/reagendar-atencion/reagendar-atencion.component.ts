@@ -4,10 +4,12 @@ import { AtencionService } from 'src/app/services/atencion.service';
 import * as moment from 'moment';
 import { NgForm } from '@angular/forms';
 import { JustificacionesService } from 'src/app/services/justificaciones.service';
+import { NotificacionService } from 'src/app/services/notificacion.service';
 
 export interface DialogReagendarData {
   id_atencion: string;
   token_user: string;
+  atencion: any;
 }
 
 @Component({
@@ -24,11 +26,18 @@ export class ReagendarAtencionComponent implements OnInit {
 
   public objeto: any = {};
 
+  // variables notificacion;
+  fechaFormatNow: string;
+  horaFormatNow: string;
+  notifTitulo: string;
+  notifText: string;
+
   @ViewChild('formulario', { static: true })
   public formulario: NgForm;
   public ingresando: boolean;
 
   constructor(
+    private notificacionService: NotificacionService,
     private atencionService: AtencionService,
     private justificacionService: JustificacionesService,
     public dialogRef: MatDialogRef<ReagendarAtencionComponent>,
@@ -81,6 +90,37 @@ export class ReagendarAtencionComponent implements OnInit {
         this.objeto.observacion, this.objeto.justificacion, fechaFormat, this.objeto.hora)
         .subscribe(
           Response => {
+            if (this.userLog.rol === 1) {
+              this.fechaFormatNow = moment(Date.now()).format('YYYY-MM-DD');
+              this.horaFormatNow = moment(Date.now()).format('HH:mm');
+              this.notifTitulo = 'Atención Reagendada';
+              this.notifText = 'Doctor ' + this.userLog.nombre + ' ' + this.userLog.apellido +
+                ' ha reagendado hora de atención para el día ' + fechaFormat + ' a las ' + this.objeto.hora +
+                '. Revisar "mis atenciones" para más detalle.';
+
+              this.notificacionService.createNotificacionDoctor(
+                this.notifTitulo, this.notifText, this.data.atencion.paciente._id,
+                this.horaFormatNow, this.fechaFormatNow, Response._id).subscribe(
+                  ResponseNotif => {
+                    console.log('notificacion creada');
+                  }
+                );
+            } else if (this.userLog.rol === 2) {
+              this.fechaFormatNow = moment(Date.now()).format('YYYY-MM-DD');
+              this.horaFormatNow = moment(Date.now()).format('HH:mm');
+              this.notifTitulo = 'Atención Reagendada';
+              this.notifText = 'Paciente ' + this.userLog.nombre + ' ' + this.userLog.apellido +
+                ' ha reagendado hora de atención para el día ' + fechaFormat + ' a las ' + this.objeto.hora +
+                '. Revisar "mis atenciones" para más detalle.';
+
+              this.notificacionService.createNotificacionPaciente(
+                this.notifTitulo, this.notifText, this.data.atencion.doctor._id,
+                this.horaFormatNow, this.fechaFormatNow, Response._id).subscribe(
+                  ResponseNotif => {
+                    console.log('notificacion creada');
+                  }
+                );
+            }
             this.dialogRef.close(true);
           },
           Error => {

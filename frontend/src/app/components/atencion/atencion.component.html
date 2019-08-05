@@ -52,7 +52,7 @@
                     </button>
                 </div>
                 <button *ngIf="atencion.estado!=1 && atencion.estado!=2 && atencion.estado!=3" color="primary"
-                    matTooltip="Cancelar Atención" mat-raised-button (click)="cancelarAtencion()">
+                    matTooltip="Cancelar Atención" mat-raised-button (click)="openCancelDialog()">
                     <mat-icon>cancel</mat-icon>
                     <span style="margin-left: 8px;">Cancelar Atención</span>
                 </button>
@@ -73,7 +73,7 @@
         </mat-card-actions>
     </mat-card>
 
-    <mat-card class="m-2 mat-elevation-z4" *ngIf="atencion.estado==2 || atencion.estado == 4">
+    <mat-card class="m-2 mat-elevation-z4" *ngIf="atencion.estado==2 || atencion.estado == 3 || atencion.estado == 4">
         <mat-card-title>
             Detalle
             <hr style="color: #0056b2;" />

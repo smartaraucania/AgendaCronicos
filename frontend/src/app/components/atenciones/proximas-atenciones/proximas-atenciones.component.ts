@@ -34,14 +34,10 @@ export class ProximasAtencionesComponent implements AfterViewInit, OnInit {
       Proximas => {
         this.buscando = false;
         this.atenciones = Proximas;
-        console.log(Proximas);
         this.dataSource = new DataTableAtencionesDataSource(this.atenciones);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-        console.log(this.dataSource);
         this.table.dataSource = this.dataSource;
-        console.log(this.table);
-
       });
   }
 
