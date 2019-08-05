@@ -266,7 +266,7 @@ function getAtencionActivaPaciente(req, res) {
  * @param {*} res 
  */
 function getAtencionPorId(req, res) {
-    Atencion.findById(req.params.id).populate('doctor paciente')
+    Atencion.findById(req.params.id).populate('doctor paciente justificacion')
         .populate({ path: 'historialAtencion', options: { sort: { 'fechaFormatCambio': 'desc' } } })
         .exec((err, atencion) => {
             if (err) return res.status(400).send(err);
@@ -519,7 +519,8 @@ function cancelarAtencion(req, res) {
             }
 
             atencion.historialAtencion.push(historial);
-            //atencion.justificacion = req.params.justificacion;
+            atencion.justificacion = req.body.justificacion;
+            atencion.observacion_justificacion = req.body.observacion_justificacion;
             atencion.estado = 3;
 
             atencion.save((err) => {
@@ -753,12 +754,12 @@ function difHorariaPorMediaHora(horaInicio, horaFin) {
 
 module.exports = {
     getAtencionesPacienteLogeado,
-    getAtencionesMedicoLogeado, 
+    getAtencionesMedicoLogeado,
     getAtencionesProximasMedicoLogeado,
-    getAtencionActivaPaciente, 
-    getAtencionesAgendadasDoctorLogeado, 
-    getAtencionesEnCursoDoctorLogeado, 
-    getAtencionesCanceladasDoctorLogeado, 
+    getAtencionActivaPaciente,
+    getAtencionesAgendadasDoctorLogeado,
+    getAtencionesEnCursoDoctorLogeado,
+    getAtencionesCanceladasDoctorLogeado,
     getAtencionesPacientePorId,
     agendarHoraPorPaciente,
     agendarHoraPorDoctor,

@@ -8,6 +8,7 @@ const pacienteController = require('../controllers/pacienteController');
 const medicoController = require('../controllers/medicoController');
 const usuarioController = require('../controllers/usuarioController');
 const atencionController = require('../controllers/atencionController');
+const notificacionController = require('../controllers/notificacionController');
 
 // roles: 1-Medico 2-Paciente
 
@@ -40,5 +41,9 @@ protectedRouter.get('/paciente/atenciones',middleware.isAuth,middleware.hasRole(
 protectedRouter.get('/paciente/atencion/activa',middleware.isAuth,middleware.hasRole(2),atencionController.getAtencionActivaPaciente);
 protectedRouter.get('/paciente/:id/atenciones',middleware.isAuth,middleware.hasRole(1),atencionController.getAtencionesPacientePorId);
 protectedRouter.post('/paciente/agendar',middleware.isAuth,middleware.hasRole(2),atencionController.agendarHoraPorPaciente);
+
+//Notificaciones Routes
+protectedRouter.post('/notificaciones/paciente',middleware.isAuth,middleware.hasRole(2), notificacionController.getNotificacionesPaciente);
+protectedRouter.post('/notificaciones/doctor', middleware.isAuth, middleware.hasRole(1), notificacionController.getNotificacionesDoctor);
 
 module.exports = protectedRouter;

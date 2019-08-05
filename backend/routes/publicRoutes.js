@@ -11,6 +11,7 @@ const doctorController = require('../controllers/medicoController');
 const justificacionController = require('../controllers/justificacionController');
 const noticiasController = require('../controllers/noticiasController');
 const atencionController = require('../controllers/atencionController');
+const notificacionController = require('../controllers/notificacionController');
 const googleCalendarController = require('../controllers/googleCalendarController');
 
 //cesfam routes
@@ -48,6 +49,10 @@ publicRouter.get('/noticias',noticiasController.getTweets);
 //atencion routes
 publicRouter.post('/atencion/disponibles',atencionController.getAtencionesDisponiblesDelDia);
 
+//notificacion routes
+publicRouter.post('/notificacion', notificacionController.createNotificacion);
+
 publicRouter.get('/calendario/eventos',googleCalendarController.getAllEvents);
+
 
 module.exports = publicRouter;
