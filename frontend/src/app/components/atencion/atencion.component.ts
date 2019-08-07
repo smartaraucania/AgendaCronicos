@@ -18,164 +18,6 @@ export interface DialogCancelData {
 }
 
 @Component({
-  selector: 'app-atencion',
-  templateUrl: './atencion.component.html',
-  styleUrls: ['./atencion.component.scss']
-})
-export class AtencionComponent implements AfterViewInit, OnInit {
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild(MatTable, { static: false }) table: MatTable<any>;
-  dataSource: DataTableAtencionDataSource;
-
-  displayedColumns = ['estado', 'cambiadoPor', 'horaCambio'];
-
-  // variables notificacion;
-  fechaFormatNow: string;
-  horaFormatNow: string;
-  notifTitulo: string;
-  notifText: string;
-
-  public userLog: any = JSON.parse(localStorage.getItem('Usuario'));
-  public atencion: any = null;
-  public historial: any[] = null;
-  public observacion: string;
-
-  constructor(
-    private notificacionService: NotificacionService,
-    private atencionService: AtencionService,
-    private route: ActivatedRoute,
-    public finalizarDialog: MatDialog
-  ) { }
-
-  ngOnInit() {
-    this.atencionService.getAtencionPorId(this.userLog.token, this.route.snapshot.params.id).subscribe(
-      Response => {
-        this.atencion = Response;
-      });
-  }
-
-  ngAfterViewInit() {
-    this.atencionService.getAtencionPorId(this.userLog.token, this.route.snapshot.params.id).subscribe(
-      Response => {
-        this.historial = Response.historialAtencion;
-
-        this.dataSource = new DataTableAtencionDataSource(this.historial);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-        this.table.dataSource = this.dataSource;
-      });
-  }
-
-  openReagendarDialog(): void {
-    const dialogRef = this.finalizarDialog.open(ReagendarAtencionComponent, {
-      width: '90%',
-      data: {
-        id_atencion: this.route.snapshot.params.id,
-        token_user: this.userLog.token,
-        atencion: this.atencion
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.ngOnInit();
-        this.ngAfterViewInit();
-      } else {
-        console.log("ya valistes");
-      }
-
-    });
-  }
-
-  openDialog(): void {
-    const dialogRef = this.finalizarDialog.open(FinalizarAtencionDialogComponent, {
-      width: '90%',
-      data: { observacion: this.observacion }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.observacion = result;
-
-      if (this.observacion != null) {
-        this.atencionService.finalizarAtencion(this.userLog.token, this.route.snapshot.params.id, this.observacion).subscribe(
-          Response => {
-            if (this.userLog.rol === 1) {
-              this.fechaFormatNow = moment(Date.now()).format('YYYY-MM-DD');
-              this.horaFormatNow = moment(Date.now()).format('HH:mm');
-              this.notifTitulo = 'Atención Finalizada';
-              this.notifText = 'Doctor ' + this.userLog.nombre + ' ' + this.userLog.apellido +
-                ' ha finalizado la hora de atención del día ' + this.atencion.fecha + ' a las ' + this.atencion.hora +
-                '. Revisar "mis atenciones" para más detalle.';
-
-              this.notificacionService.createNotificacionDoctor(
-                this.notifTitulo, this.notifText, this.atencion.paciente._id,
-                this.horaFormatNow, this.fechaFormatNow, Response._id).subscribe(
-                  ResponseNotif => {
-                    console.log('notificacion creada');
-                  }
-                );
-            }
-
-            this.ngOnInit();
-            this.ngAfterViewInit();
-          }
-        );
-      } else {
-        console.log("ya valistes");
-      }
-
-    });
-  }
-
-  openCancelDialog(): void {
-    const dialogRef = this.finalizarDialog.open(CancelarAtencionDialogComponent, {
-      width: '90%',
-      data: { atencion: this.atencion }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.observacion = result;
-      if (result) {
-        this.ngOnInit();
-        this.ngAfterViewInit();
-      } else {
-        console.log('ya valistes');
-      }
-    });
-
-  }
-
-  iniciarAtencion() {
-    this.atencionService.iniciarAtencion(this.userLog.token, this.route.snapshot.params.id).subscribe(
-      Response => {
-        if (this.userLog.rol === 1) {
-          this.fechaFormatNow = moment(Date.now()).format('YYYY-MM-DD');
-          this.horaFormatNow = moment(Date.now()).format('HH:mm');
-          this.notifTitulo = 'Atención Iniciada';
-          this.notifText = 'Doctor ' + this.userLog.nombre + ' ' + this.userLog.apellido +
-            ' ha iniciado la hora de atención del día ' + this.atencion.fecha + ' a las ' + this.atencion.hora +
-            '. Revisar "mis atenciones" para más detalle.';
-
-          this.notificacionService.createNotificacionDoctor(
-            this.notifTitulo, this.notifText, this.atencion.paciente._id,
-            this.horaFormatNow, this.fechaFormatNow, Response._id).subscribe(
-              ResponseNotif => {
-                console.log('notificacion creada');
-              }
-            );
-        }
-
-        this.ngOnInit();
-        this.ngAfterViewInit();
-      }
-    );
-  }
-
-}
-
-@Component({
   selector: 'app-finalizar-atencion-dialog',
   templateUrl: './finalizar-atencion-dialog.html',
   styleUrls: ['./atencion.component.scss']
@@ -293,3 +135,163 @@ export class CancelarAtencionDialogComponent implements OnInit {
   }
 
 }
+
+@Component({
+  selector: 'app-atencion',
+  templateUrl: './atencion.component.html',
+  styleUrls: ['./atencion.component.scss']
+})
+export class AtencionComponent implements AfterViewInit, OnInit {
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatTable, { static: false }) table: MatTable<any>;
+  dataSource: DataTableAtencionDataSource;
+
+  displayedColumns = ['estado', 'cambiadoPor', 'horaCambio'];
+
+  // variables notificacion;
+  fechaFormatNow: string;
+  horaFormatNow: string;
+  notifTitulo: string;
+  notifText: string;
+
+  public userLog: any = JSON.parse(localStorage.getItem('Usuario'));
+  public atencion: any = null;
+  public historial: any[] = null;
+  public observacion: string;
+
+  constructor(
+    private notificacionService: NotificacionService,
+    private atencionService: AtencionService,
+    private route: ActivatedRoute,
+    public finalizarDialog: MatDialog
+  ) { }
+
+  ngOnInit() {
+    this.atencionService.getAtencionPorId(this.userLog.token, this.route.snapshot.params.id).subscribe(
+      Response => {
+        this.atencion = Response;
+      });
+  }
+
+  ngAfterViewInit() {
+    this.atencionService.getAtencionPorId(this.userLog.token, this.route.snapshot.params.id).subscribe(
+      Response => {
+        this.historial = Response.historialAtencion;
+
+        this.dataSource = new DataTableAtencionDataSource(this.historial);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.table.dataSource = this.dataSource;
+      });
+  }
+
+  openReagendarDialog(): void {
+    const dialogRef = this.finalizarDialog.open(ReagendarAtencionComponent, {
+      width: '90%',
+      data: {
+        id_atencion: this.route.snapshot.params.id,
+        token_user: this.userLog.token,
+        atencion: this.atencion
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.ngOnInit();
+        this.ngAfterViewInit();
+      } else {
+        console.log('ya valistes');
+      }
+
+    });
+  }
+
+  openDialog(): void {
+    const dialogRef = this.finalizarDialog.open(FinalizarAtencionDialogComponent, {
+      width: '90%',
+      data: { observacion: this.observacion }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.observacion = result;
+
+      if (this.observacion != null) {
+        this.atencionService.finalizarAtencion(this.userLog.token, this.route.snapshot.params.id, this.observacion).subscribe(
+          Response => {
+            if (this.userLog.rol === 1) {
+              this.fechaFormatNow = moment(Date.now()).format('YYYY-MM-DD');
+              this.horaFormatNow = moment(Date.now()).format('HH:mm');
+              this.notifTitulo = 'Atención Finalizada';
+              this.notifText = 'Doctor ' + this.userLog.nombre + ' ' + this.userLog.apellido +
+                ' ha finalizado la hora de atención del día ' + this.atencion.fecha + ' a las ' + this.atencion.hora +
+                '. Revisar "mis atenciones" para más detalle.';
+
+              this.notificacionService.createNotificacionDoctor(
+                this.notifTitulo, this.notifText, this.atencion.paciente._id,
+                this.horaFormatNow, this.fechaFormatNow, Response._id).subscribe(
+                  ResponseNotif => {
+                    console.log('notificacion creada');
+                  }
+                );
+            }
+
+            this.ngOnInit();
+            this.ngAfterViewInit();
+          }
+        );
+      } else {
+        console.log('ya valistes');
+      }
+
+    });
+  }
+
+  openCancelDialog(): void {
+    const dialogRef = this.finalizarDialog.open(CancelarAtencionDialogComponent, {
+      width: '90%',
+      data: { atencion: this.atencion }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.observacion = result;
+      if (result) {
+        this.ngOnInit();
+        this.ngAfterViewInit();
+      } else {
+        console.log('ya valistes');
+      }
+    });
+
+  }
+
+  iniciarAtencion() {
+    this.atencionService.iniciarAtencion(this.userLog.token, this.route.snapshot.params.id).subscribe(
+      Response => {
+        if (this.userLog.rol === 1) {
+          this.fechaFormatNow = moment(Date.now()).format('YYYY-MM-DD');
+          this.horaFormatNow = moment(Date.now()).format('HH:mm');
+          this.notifTitulo = 'Atención Iniciada';
+          this.notifText = 'Doctor ' + this.userLog.nombre + ' ' + this.userLog.apellido +
+            ' ha iniciado la hora de atención del día ' + this.atencion.fecha + ' a las ' + this.atencion.hora +
+            '. Revisar "mis atenciones" para más detalle.';
+
+          this.notificacionService.createNotificacionDoctor(
+            this.notifTitulo, this.notifText, this.atencion.paciente._id,
+            this.horaFormatNow, this.fechaFormatNow, Response._id).subscribe(
+              ResponseNotif => {
+                console.log('notificacion creada');
+              }
+            );
+        }
+
+        this.ngOnInit();
+        this.ngAfterViewInit();
+      }
+    );
+  }
+
+}
+
+

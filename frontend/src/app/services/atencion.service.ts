@@ -21,7 +21,7 @@ export class AtencionService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        Authorization: 'Bearer ' + token
       })
     };
     return this.http.get(this.url + 'protected/paciente/' + id + '/atenciones', httpOptions);
@@ -36,7 +36,7 @@ export class AtencionService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        Authorization: 'Bearer ' + token
       })
     };
     return this.http.get(this.url + 'protected/atencion/' + id, httpOptions);
@@ -50,7 +50,7 @@ export class AtencionService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        Authorization: 'Bearer ' + token
       })
     };
     return this.http.get(this.url + 'protected/doctor/atenciones', httpOptions);
@@ -64,7 +64,7 @@ export class AtencionService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        Authorization: 'Bearer ' + token
       })
     };
     return this.http.get(this.url + 'protected/paciente/atenciones', httpOptions);
@@ -78,7 +78,7 @@ export class AtencionService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        Authorization: 'Bearer ' + token
       })
     };
     return this.http.get(this.url + 'protected/doctor/atenciones/proximas', httpOptions);
@@ -98,7 +98,7 @@ export class AtencionService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        Authorization: 'Bearer ' + token
       })
     };
     return this.http.put(this.url + 'protected/atencion/' + id + '/cancelar', params, httpOptions);
@@ -113,7 +113,7 @@ export class AtencionService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        Authorization: 'Bearer ' + token
       })
     };
     return this.http.put(this.url + 'protected/atencion/' + id + '/iniciar', null, httpOptions);
@@ -123,18 +123,18 @@ export class AtencionService {
    * Metodo que permite al doctor finalizar una atencion con el estado en transcurso
    * @param token token de acceso del usuario logeado
    * @param id id de la atencion en transcurso a finalizar
-   * @param observacion observacion asociada al fin de la atencion
+   * @param observacionInput observacion asociada al fin de la atencion
    */
-  public finalizarAtencion(token: string, id: string, observacion: string): Observable<any> {
+  public finalizarAtencion(token: string, id: string, observacionInput: string): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        Authorization: 'Bearer ' + token
       })
     };
 
     const params = {
-      'observacion': observacion
+      observacion: observacionInput
     };
 
     return this.http.put(this.url + 'protected/atencion/' + id + '/finalizar', params, httpOptions);
@@ -149,13 +149,14 @@ export class AtencionService {
    * @param fechaInput fecha de la nueva atencion
    * @param horaInput hora de la nueva atencion
    */
-  public reagendarAtencion(token: string, id: string, observacionInput: string,
-    justificacionInput: string, fechaInput: string, horaInput: string): Observable<any> {
+  public reagendarAtencion(
+    token: string, id: string, observacionInput: string, justificacionInput: string,
+    fechaInput: string, horaInput: string): Observable<any> {
 
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        Authorization: 'Bearer ' + token
       })
     };
     const params = {
@@ -197,7 +198,7 @@ export class AtencionService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        Authorization: 'Bearer ' + token
       })
     };
 
@@ -221,7 +222,7 @@ export class AtencionService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        Authorization: 'Bearer ' + token
       })
     };
 
@@ -242,7 +243,7 @@ export class AtencionService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        Authorization: 'Bearer ' + token
       })
     };
 

@@ -51,22 +51,58 @@
         </mat-card>
     </div>
 </div> -->
-
 <div class="mat-elevation-z8 ficha mx-auto">
-    <table mat-table class="full-width-table" matSort aria-label="Elements">
-        <!-- Rut Column -->
+    <mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="rut">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Rut</mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="rut">
+                <span class="mobile-label">Rut:</span>
+                {{row.rut}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="nombre">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="nombre">
+                <span class="mobile-label">Nombre:</span>
+                {{row.nombre}} {{row.apellido}}
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="cesfam">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Cesfam</mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let row" data-label="cesfam">
+                <span class="mobile-label">Cesfam:</span>
+                {{row.cesfam.nombre}}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" routerLink="/dashboard/ficha/{{row._id}}">
+        </mat-row>
+    </mat-table>
+
+    <mat-paginator [length]="dataSource?.data.length" [pageIndex]="0" [pageSize]="10"
+        [pageSizeOptions]="[10, 50, 100, 250]">
+    </mat-paginator>
+</div>
+<!--<div class="mat-elevation-z8 ficha mx-auto">
+
+
+
+     <table mat-table class="full-width-table" matSort aria-label="Elements">
+        
         <ng-container matColumnDef="rut">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Rut</th>
             <td mat-cell *matCellDef="let row"><strong>{{row.rut}}</strong></td>
         </ng-container>
 
-        <!-- Nombre Column -->
+        
         <ng-container matColumnDef="nombre">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
             <td mat-cell *matCellDef="let row">{{row.nombre}} {{row.apellido}}</td>
         </ng-container>
 
-        <!-- Cesfam Column -->
+        
         <ng-container matColumnDef="cesfam">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Cesfam</th>
             <td mat-cell *matCellDef="let row">{{row.cesfam.nombre}}</td>
@@ -79,7 +115,7 @@
     <mat-paginator #paginator [length]="dataSource?.data.length" [pageIndex]="0" [pageSize]="50"
         [pageSizeOptions]="[1, 50, 100, 250]">
     </mat-paginator>
-</div>
+</div> -->
 
 <div style="position: fixed; right: 20px; bottom: 20px">
     <button mat-fab color="primary" matTooltip="Agregar Paciente" routerLink="/dashboard/paciente">

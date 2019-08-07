@@ -11,3 +11,35 @@
     left: 50%;
     top: 50%
 }
+
+.mobile-label {
+    display: none;
+  }
+  
+@media(max-width: 600px) {
+    .mobile-label {
+      width: 80px;
+      display: inline-block;
+      font-weight: bold;
+    }
+  
+    .mat-header-row {
+      display: none;
+    }
+  
+    .mat-row { 
+      flex-direction: column;
+      align-items: start;
+      padding: 8px 24px;
+      min-height: min-content;
+    }
+
+    .mat-cell {
+        min-height: min-content;
+        align-items: center;
+    }
+
+    .mat-cell:first-of-type {
+        padding-left: 0px;
+    }
+}

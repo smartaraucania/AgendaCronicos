@@ -1,6 +1,6 @@
-.full-width-table {
-    width: 100%;
-  }
+// .full-width-table {
+//     width: 100%;
+//   }
 
 .ficha{
   width: calc(100% - 15px);
@@ -17,4 +17,43 @@
 .item {
   margin: 4px;
   flex: 0 1 calc(50% - 8px); /* <-- adjusting for margin */
+}
+
+body {
+  font-family: 'Covered By Your Grace', cursive;
+  line-height: 1.25;
+  
+}
+
+
+.mobile-label {
+  display: none;
+}
+
+@media(max-width: 600px) {
+  .mobile-label {
+    width: 80px;
+    display: inline-block;
+    font-weight: bold;
+  }
+
+  .mat-header-row {
+    display: none;
+  }
+
+  .mat-row { 
+    flex-direction: column;
+    align-items: start;
+    padding: 8px 24px;
+    min-height: min-content;
+  }
+
+  .mat-cell {
+      min-height: min-content;
+      align-items: center;
+  }
+
+  .mat-cell:first-of-type {
+      padding-left: 0px;
+  }
 }

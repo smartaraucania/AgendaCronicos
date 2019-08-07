@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class UsuarioService {
 
-  public url: string = "http://localhost:4000/";
+  public url = 'http://localhost:4000/';
 
   constructor(
     private http: HttpClient
@@ -21,7 +21,7 @@ export class UsuarioService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        Authorization: 'Bearer ' + token
       })
     };
     return this.http.get(this.url + 'protected/me', httpOptions);
@@ -37,7 +37,7 @@ export class UsuarioService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        Authorization: 'Bearer ' + token
       })
     };
 
@@ -74,7 +74,7 @@ export class UsuarioService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        Authorization: 'Bearer ' + token
       })
     };
 
