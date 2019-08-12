@@ -1,18 +1,26 @@
 const Justificacion = require('../models/justificacion');
 
+/**
+ * Metodo que permite obtener todas las justificaciones asociadas a los medicos
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getJustificacionesMedico(req, res) {
     Justificacion.find({
         tipoJustificacion: 1
     }).exec((err, justificaciones) => {
-        console.log("asdasd"+justificaciones);
         if (err) return res.status(400).send(err);
-        console.log(justificaciones);
         if (!justificaciones) return res.status(208).send({ 'Error': 'No existen justificaciones' });
 
         return res.status(200).send(justificaciones);
     });
 }
 
+/**
+ * Metodo que permite obtener todas las justificaciones asociadas a los pacientes
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getJustificacionesPaciente(req, res) {
     Justificacion.find({
         tipoJustificacion: 2
@@ -24,6 +32,11 @@ function getJustificacionesPaciente(req, res) {
     });
 }
 
+/**
+ * Metodo que permite registrar una nueva justificacion en el sistema
+ * @param {*} req 
+ * @param {*} res 
+ */
 function createJustificacion(req, res) {
 
     var justificacion = new Justificacion({
@@ -46,6 +59,11 @@ function createJustificacion(req, res) {
     });
 }
 
+/**
+ * Metodo que permite eliminar una justificacion especifica segun su id
+ * @param {*} req 
+ * @param {*} res 
+ */
 function deleteJustificacion(req, res) {
     Justificacion.findById(req.params.justificacionId).exec(function (err, justificacion) {
         if (err) return res.status(400).send({ "Error": "Error de DB" });

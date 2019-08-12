@@ -9,6 +9,11 @@ const bcrypt = require('bcrypt-nodejs');
 const saltRounds = 10;
 var salt = bcrypt.genSaltSync(saltRounds);
 
+/**
+ * Metodo que permite registrar medico en el sistema
+ * @param {*} req 
+ * @param {*} res 
+ */
 function registrarMedico(req, res) {
     //Valida que exista solo un medico con el mismo rut
     User.findOne({
@@ -42,6 +47,11 @@ function registrarMedico(req, res) {
     });
 }
 
+/**
+ * Metodo que permite al usuario (medico o paciente) logearse al sistema
+ * @param {*} req 
+ * @param {*} res 
+ */
 function loginUsuario(req,res) {
     User.findOne({
         rut: req.body.rut

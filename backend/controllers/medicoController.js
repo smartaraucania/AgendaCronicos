@@ -1,5 +1,10 @@
 const User = require('../models/usuario');
 
+/**
+ * Metodo que permite obtener todos los doctores registrados en el sistema
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getAllDoctores(req, res) {
     User.find({ rol: 1 }).populate('cesfam').exec((err, doctores) => {
         if (err) return res.status(400).send(err);
@@ -9,6 +14,11 @@ function getAllDoctores(req, res) {
     });
 }
 
+/**
+ * Metodo que permite obtener un doctor segun su rut
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getDoctorPorRut(req, res) {
     User.findOne({
         rut: req.params.rut,
@@ -21,6 +31,11 @@ function getDoctorPorRut(req, res) {
     });
 }
 
+/**
+ * Metodo que permite obtener todos los pacientes de un doctor en especifico
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getPacientesDoctor(req,res) {
 
     User.findById(req.params.medicoCabeceraId).exec((err,doctor)=>{

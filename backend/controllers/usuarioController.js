@@ -5,6 +5,11 @@ const bcrypt = require('bcrypt-nodejs');
 const saltRounds = 10;
 var salt = bcrypt.genSaltSync(saltRounds);
 
+/**
+ * Metodo que permite al obtener los datos del usuario logeado
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getMe(req, res) {
 
     User.findById(req.user.id).populate('medicoCabecera enfermedadCronica cesfam').exec((err, userLog) => {
@@ -15,6 +20,11 @@ function getMe(req, res) {
     });
 }
 
+/**
+ * Metodo que permite al usuario logeado editar sus datos personales
+ * @param {*} req 
+ * @param {*} res 
+ */
 function editMe(req, res) {
     User.findById(req.user.id).populate('medicoCabecera enfermedadCronica cesfam').exec((err, user) => {
         if (err) return res.status(400).send(err.message);
@@ -37,6 +47,11 @@ function editMe(req, res) {
 
 }
 
+/**
+ * Metodo que permite al usuario logeado editar su contraseña
+ * @param {*} req 
+ * @param {*} res 
+ */
 function editPass(req, res) {
     var oldPassword = req.body.oldPassword || '';
     var newPassword = req.body.newPassword || '';

@@ -17,14 +17,23 @@
 .dispButtons {
     display: none;
 }
+
+.mobile-view {
+  display: none;
+}
+
   
   @media(max-width: 600px) {
     .mobile-label {
       width: 80px;
       display: inline-block;
+      font-weight: normal;
+    }
+    
+    .mobile-data {
       font-weight: bold;
     }
-  
+
     .mat-header-row {
       display: none;
     }
@@ -54,5 +63,21 @@
 
     .text-button {
         font-size: .5em;
+    }
+
+    .mobile-label-hidden {
+      display: none;
+    }
+  
+    .mat-form-field {
+        margin: 0 auto;
+    }
+
+    .mobile-view {
+      display: inline-block;
+    }
+
+    .web-view {
+      display: none;
     }
 }

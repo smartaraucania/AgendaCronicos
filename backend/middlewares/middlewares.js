@@ -5,6 +5,12 @@ const jwt = require('jsonwebtoken');
 const config = require('../config');
 const User = require('../models/usuario');
 
+/**
+ * Metodo que permite verificar si el usuario se encuentra logeado
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 function isAuth(req, res, next){
     if(!req.headers.authorization){
         return res.status(403).send({'Error':'Debe estar logeado'});
@@ -21,6 +27,10 @@ function isAuth(req, res, next){
     });
 }
 
+/**
+ * Metodo que permite verificar si el usuario tiene el rol requerido
+ * @param {*} rol 
+ */
 function hasRole(rol) {
     return function(req, res, next) {
       if (req.user.rol !== rol) return res.status(401).send({'Error':'Usuario no autorizado'});

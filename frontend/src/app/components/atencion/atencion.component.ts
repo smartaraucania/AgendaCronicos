@@ -188,7 +188,7 @@ export class AtencionComponent implements AfterViewInit, OnInit {
 
   openReagendarDialog(): void {
     const dialogRef = this.finalizarDialog.open(ReagendarAtencionComponent, {
-      width: '90%',
+      width: 'calc(100%-10px)',
       data: {
         id_atencion: this.route.snapshot.params.id,
         token_user: this.userLog.token,

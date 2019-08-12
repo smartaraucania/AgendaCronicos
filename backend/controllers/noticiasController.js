@@ -3,6 +3,11 @@ var Twitter = require('twitter');
 var config = require('../config');
 var moment = require('moment');
 
+/**
+ * Metodo que permite obtener tweets realizados por una cuenta en especifico
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getTweets(req, res) {
     //Twitter.js
     var client = new Twitter({

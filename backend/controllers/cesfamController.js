@@ -1,6 +1,11 @@
 Cesfam = require('../models/cesfam');
 User = require('../models/usuario');
 
+/**
+ * Metodo que permite ingresar un nuevo cesfam al sistema
+ * @param {*} req 
+ * @param {*} res 
+ */
 function createCesfam(req,res){
     var cesfam = new Cesfam({
         nombre: req.body.nombre,
@@ -28,6 +33,11 @@ function createCesfam(req,res){
     });
 }
 
+/**
+ * Metodo que permite obtener todos los cesfams registrados en el sistema
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getAllCesfams(req,res){
     Cesfam.find().exec((err,cesfams)=>{
         if(err) res.status(400).send(err);
@@ -37,6 +47,11 @@ function getAllCesfams(req,res){
     });
 }
 
+/**
+ * Metodo que permite obtener un cesfam en especifico segun su id
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getCesfamPorId(req,res){
     Cesfam.findById(req.params.cesfamId).exec((err,cesfam)=>{
         if(err) res.status(400).send(err);
@@ -46,6 +61,11 @@ function getCesfamPorId(req,res){
     });
 }
 
+/**
+ * MEtodo que permite eliminar un cesfam especifico segun su id
+ * @param {*} req 
+ * @param {*} res 
+ */
 function deleteCesfam(req,res){
     Cesfam.findById(req.params.cesfamId).exec(function (err, cesfam) {
         if (err) return res.status(400).send({ "Error": "Error de DB" });
@@ -59,6 +79,11 @@ function deleteCesfam(req,res){
     });
 }
 
+/**
+ * Metodo que permite obtener todos los medicos asociados a un cesfam en especifico
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getMedicosCesfam(req,res){
     User.find({
         cesfam:req.params.cesfamId,
@@ -71,6 +96,11 @@ function getMedicosCesfam(req,res){
     });
 }
 
+/**
+ * Metodo que permite obtener todos los pacientes asociados a un cesfam en especifico
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getPacientesCesfam(req,res){
     User.find({
         cesfam:req.params.cesfamId,

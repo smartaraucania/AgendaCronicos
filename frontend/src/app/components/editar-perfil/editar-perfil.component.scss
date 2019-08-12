@@ -1,0 +1,13 @@
+@media(max-width: 600px) {
+    .mobile-label {
+      display: none;
+    }
+
+    .mat-form-field {
+        margin: 0 auto;
+    }
+
+    .mat-action-row {
+        justify-content: center;
+    }
+}

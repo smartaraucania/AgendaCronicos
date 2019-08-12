@@ -1,5 +1,10 @@
 EnfermedadCronica = require('../models/enfermedadCronica');
 
+/**
+ * Metodo que permite ingresar una nueva enfermedad cronica al sistema
+ * @param {*} req 
+ * @param {*} res 
+ */
 function createCronica(req, res) {
     var cronica = new EnfermedadCronica({
         enfermedad: req.body.enfermedad
@@ -20,6 +25,11 @@ function createCronica(req, res) {
     });
 }
 
+/**
+ * Metodo que permite obtener todas las enfermedades cronicas registradas en el sistema
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getAllCronicas(req, res) {
     EnfermedadCronica.find().exec((err, cronicas) => {
         if (err) return res.status(400).send(err);
@@ -29,6 +39,11 @@ function getAllCronicas(req, res) {
     });
 }
 
+/**
+ * Metodo que permite obtener una enfermedad cronica especifica segun su id
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getCronicaPorId(req, res) {
     EnfermedadCronica.findById(req.params.cronicaId).exec((err, cronica) => {
         if (err) return res.status(400).send(err);
@@ -38,6 +53,11 @@ function getCronicaPorId(req, res) {
     });
 }
 
+/**
+ * Metodo que permite eliminar una enfermedad cronica especifica segun su id
+ * @param {*} req 
+ * @param {*} res 
+ */
 function deleteCronica(req, res) {
     EnfermedadCronica.findById(req.params.cronicaId).exec(function (err, cronica) {
         if (err) return res.status(400).send({ "Error": "Error de DB" });
