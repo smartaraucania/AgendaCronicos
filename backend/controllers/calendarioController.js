@@ -23,7 +23,7 @@ function createEvent(req, res) {
             return res.status(500).send(error);
         }
 
-        return res.status(201).send(value);
+        return res.status(201).send({value});
     });
 
 }
