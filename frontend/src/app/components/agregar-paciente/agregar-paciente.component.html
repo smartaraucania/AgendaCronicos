@@ -1,141 +1,87 @@
 <mat-card class="m-2 mat-elevation-z4">
     <form #formulario="ngForm" (ngSubmit)="onSubmit()">
         <mat-card-content>
-            <table style="width:100%">
-                <tr>
-                    <td class="mobile-label">
-                        <span>Rut:</span>
-                    </td>
-                    <td>
-                        <mat-form-field>
-                            <input matInput name="rut" placeholder="Ingrese rut paciente" [(ngModel)]="objeto.rut"
-                                required>
-                        </mat-form-field>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mobile-label">
-                        <span>Nombre:</span>
-                    </td>
-                    <td>
-                        <mat-form-field>
-                            <input matInput name="nombre" placeholder="Ingrese nombre paciente"
-                                [(ngModel)]="objeto.nombre" required>
-                        </mat-form-field>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mobile-label">
-                        <span>Apellido:</span>
-                    </td>
-                    <td>
-                        <mat-form-field>
-                            <input matInput name="apellido" placeholder="Ingrese apellido paciente"
-                                [(ngModel)]="objeto.apellido" required>
-                        </mat-form-field>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mobile-label">
-                        <span>Correo:</span>
-                    </td>
-                    <td>
-                        <mat-form-field>
-                            <input matInput type="email" name="correo" placeholder="Ingrese correo paciente"
-                                [(ngModel)]="objeto.correo" [formControl]="emailFormControl" required>
-                            <mat-error
-                                *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-                                Porfavor ingresar correo valido
-                            </mat-error>
-                            <mat-error *ngIf="emailFormControl.hasError('required')">
-                                Correo es <strong>requerido</strong>
-                            </mat-error>
-                        </mat-form-field>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mobile-label">
-                        <span>Telefono:</span>
-                    </td>
-                    <td>
-                        <mat-form-field>
-                            <span matPrefix>+56 &nbsp;</span>
-                            <input matInput name="telefono" type="tel" placeholder="Ingrese telefono paciente"
-                                [(ngModel)]="objeto.telefono" required>
-                        </mat-form-field>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mobile-label">
-                        <span>Fecha Nacimiento:</span>
-                    </td>
-                    <td>
-                        <mat-form-field>
-                            <input name="fechaNacimiento" [(ngModel)]="objeto.fechaNacimiento" matInput
-                                [matDatepicker]="picker" placeholder="Seleccionar fecha nacimiento" required>
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker touchUi #picker disabled=false></mat-datepicker>
-                        </mat-form-field>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mobile-label">
-                        <span>Dirección:</span>
-                    </td>
-                    <td>
-                        <mat-form-field>
-                            <input matInput name="direccion" placeholder="Ingrese direccion paciente"
-                                [(ngModel)]="objeto.direccion" required>
-                        </mat-form-field>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mobile-label">
-                        <span>Cesfam:</span>
-                    </td>
-                    <td>
-                        <mat-form-field>
-                            <mat-label>Seleccione Cesfam</mat-label>
-                            <mat-select name="cesfam" [(ngModel)]="objeto.cesfam" required>
-                                <mat-option *ngFor="let cesfam of cesfams" [value]="cesfam._id">
-                                    {{cesfam.nombre}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mobile-label">
-                        <span>Enfermedad Cronica:</span>
-                    </td>
-                    <td>
-                        <mat-form-field>
-                            <mat-label>Seleccione enfermedad cronica</mat-label>
-                            <mat-select name="enfermedadCronica" [(ngModel)]="objeto.enfermedadCronica" required>
-                                <mat-option *ngFor="let cronica of cronicas" [value]="cronica._id">
-                                    {{cronica.enfermedad}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </td>
-                </tr>
-            </table>
-
-            <!-- <div *ngIf="!ingresando">
-                <button class="col-12" mat-raised-button>
-                    <mat-icon>alarm_add</mat-icon>
-                    <span style="margin-left: 8px;">Cancelar</span>
-                </button>
-                <button class="col-12" type="submit" mat-raised-button color="primary">
-                    <mat-icon>alarm_add</mat-icon>
-                    <span style="margin-left: 8px;">Agendar Atención</span>
-                </button>
-
+            <div class="col-12">
+                <div class="row">
+                    <mat-label class="col-2 label mobile-label">Rut</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12">
+                        <input matInput name="rut" placeholder="Ingrese rut paciente" [(ngModel)]="objeto.rut" required>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-label class="col-2 label mobile-label">Nombre</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12">
+                        <input matInput name="nombre" placeholder="Ingrese nombre paciente" [(ngModel)]="objeto.nombre"
+                            required>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-label class="col-2 label mobile-label">Apellido</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12">
+                        <input matInput name="apellido" placeholder="Ingrese apellido paciente"
+                            [(ngModel)]="objeto.apellido" required>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-label class="col-2 label mobile-label">Correo</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12">
+                        <input matInput type="email" name="correo" placeholder="Ingrese correo paciente"
+                            [(ngModel)]="objeto.correo" [formControl]="emailFormControl" required>
+                        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                            Porfavor ingresar correo valido
+                        </mat-error>
+                        <mat-error *ngIf="emailFormControl.hasError('required')">
+                            Correo es <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-label class="col-2 label mobile-label">Telefono</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12">
+                        <span matPrefix>+56 &nbsp;</span>
+                        <input matInput name="telefono" type="tel" placeholder="Ingrese telefono paciente"
+                            [(ngModel)]="objeto.telefono" required>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-label class="col-2 label mobile-label">Fecha Nacimiento</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12">
+                        <input name="fechaNacimiento" [(ngModel)]="objeto.fechaNacimiento" matInput
+                            [matDatepicker]="picker" placeholder="Seleccionar fecha nacimiento" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi #picker disabled=false></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-label class="col-2 label mobile-label">Dirección</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12">
+                        <input matInput name="direccion" placeholder="Ingrese direccion paciente"
+                            [(ngModel)]="objeto.direccion" required>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-label class="col-2 label mobile-label">Cesfam</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12">
+                        <mat-label>Seleccione Cesfam</mat-label>
+                        <mat-select name="cesfam" [(ngModel)]="objeto.cesfam" required>
+                            <mat-option *ngFor="let cesfam of cesfams" [value]="cesfam._id">
+                                {{cesfam.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-label class="col-2 label mobile-label">Enfermedad Cronica</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12">
+                        <mat-label>Seleccione enfermedad cronica</mat-label>
+                        <mat-select name="enfermedadCronica" [(ngModel)]="objeto.enfermedadCronica" required>
+                            <mat-option *ngFor="let cronica of cronicas" [value]="cronica._id">
+                                {{cronica.enfermedad}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
             </div>
-            <div *ngIf="ingresando" class="justify-content-center d-flex">
-                <mat-spinner></mat-spinner>
-            </div> -->
-
 
         </mat-card-content>
         <mat-card-actions align="right">

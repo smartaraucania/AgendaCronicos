@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class UsuarioService {
 
-  public url = 'http://localhost:4000/';
+  // public url = 'http://localhost:4000/';
+  public url = 'http://54.85.148.66:4000/';
 
   constructor(
     private http: HttpClient

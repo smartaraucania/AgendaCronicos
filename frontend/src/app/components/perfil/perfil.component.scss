@@ -1,0 +1,22 @@
+.label {
+    align-self: center;
+    margin-left: 20px;
+}
+
+.mobile-display {
+    display: none;
+}
+
+.web-display {
+    display: block;
+}
+
+@media(max-width: 600px) {
+    .mobile-display {
+        display: block;
+    } 
+
+    .web-display {
+        display: none;
+    }
+}

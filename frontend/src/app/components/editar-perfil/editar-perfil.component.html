@@ -9,95 +9,70 @@
 
         </mat-expansion-panel-header>
         <form #formulario="ngForm" (ngSubmit)="onSubmit()">
-            <table style="width:100%">
-                <tr>
-                    <td class="mobile-label">
-                        <span>Rut:</span>
-                    </td>
-                    <td>
-                        <mat-form-field>
-                            <input matInput name="rut" placeholder="Ingrese rut paciente" [(ngModel)]="objeto.rut"
-                                disabled>
-                        </mat-form-field>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mobile-label">
-                        <span>Nombre:</span>
-                    </td>
-                    <td>
-                        <mat-form-field>
-                            <input matInput name="nombre" placeholder="Ingrese nombre" [(ngModel)]="objeto.nombre"
-                                required>
-                        </mat-form-field>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mobile-label">
-                        <span>Apellido:</span>
-                    </td>
-                    <td>
-                        <mat-form-field>
-                            <input matInput name="apellido" placeholder="Ingrese apellido" [(ngModel)]="objeto.apellido"
-                                required>
-                        </mat-form-field>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mobile-label">
-                        <span>Correo:</span>
-                    </td>
-                    <td>
-                        <mat-form-field>
-                            <input matInput type="email" name="correo" placeholder="Ingrese correo"
-                                [(ngModel)]="objeto.correo" [formControl]="emailFormControl" required>
-                            <mat-error
-                                *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-                                Porfavor ingresar correo valido
-                            </mat-error>
-                            <mat-error *ngIf="emailFormControl.hasError('required')">
-                                Correo es <strong>requerido</strong>
-                            </mat-error>
-                        </mat-form-field>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mobile-label">
-                        <span>Teléfono:</span>
-                    </td>
-                    <td>
-                        <mat-form-field>
-                            <span matPrefix>+56 &nbsp;</span>
-                            <input matInput name="telefono" type="tel" placeholder="Ingrese telefono"
-                                [(ngModel)]="objeto.telefono" required>
-                        </mat-form-field>
-                    </td>
-                </tr>
-                <tr *ngIf="userLog.rol == 2">
-                    <td class="mobile-label">
-                        <span>Fecha Nacimiento:</span>
-                    </td>
-                    <td>
-                        <mat-form-field>
-                            <input name="fechaNacimiento" [(ngModel)]="objeto.fechaNacimiento" matInput
-                                [matDatepicker]="picker" placeholder="Seleccionar fecha nacimiento" required>
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker touchUi #picker disabled=false></mat-datepicker>
-                        </mat-form-field>
-                    </td>
-                </tr>
-                <tr *ngIf="userLog.rol == 2">
-                    <td class="mobile-label">
-                        <span>Dirección:</span>
-                    </td>
-                    <td>
-                        <mat-form-field>
-                            <input matInput name="direccion" placeholder="Ingrese direccion"
-                                [(ngModel)]="objeto.direccion" required>
-                        </mat-form-field>
-                    </td>
-                </tr>
-            </table>
+            <div class="col-12">
+                <div class="row">
+                    <mat-label class="col-2 label mobile-label">Rut</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12">
+                        <input matInput name="rut" placeholder="Ingrese rut paciente" [(ngModel)]="objeto.rut" disabled>
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-label class="col-2 label mobile-label">Nombre</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12">
+                        <input matInput name="nombre" placeholder="Ingrese nombre" [(ngModel)]="objeto.nombre" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-label class="col-2 label mobile-label">Apellido</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12">
+                        <input matInput name="apellido" placeholder="Ingrese apellido" [(ngModel)]="objeto.apellido"
+                            required>
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-label class="col-2 label mobile-label">Correo</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12">
+                        <input matInput type="email" name="correo" placeholder="Ingrese correo"
+                            [(ngModel)]="objeto.correo" [formControl]="emailFormControl" required>
+                        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                            Porfavor ingresar correo valido
+                        </mat-error>
+                        <mat-error *ngIf="emailFormControl.hasError('required')">
+                            Correo es <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-label class="col-2 label mobile-label">Teléfono</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12">
+                        <span matPrefix>+56 &nbsp;</span>
+                        <input matInput name="telefono" type="tel" placeholder="Ingrese telefono"
+                            [(ngModel)]="objeto.telefono" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="row" *ngIf="userLog.rol == 2">
+                    <mat-label class="col-2 label mobile-label">Fecha Nacimiento</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12">
+                        <input name="fechaNacimiento" [(ngModel)]="objeto.fechaNacimiento" matInput
+                            [matDatepicker]="picker" placeholder="Seleccionar fecha nacimiento" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi #picker disabled=false></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+                <div class="row" *ngIf="userLog.rol == 2">
+                    <mat-label class="col-2 label mobile-label">Dirección</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12">
+                        <input matInput name="direccion" placeholder="Ingrese direccion" [(ngModel)]="objeto.direccion"
+                            required>
+                    </mat-form-field>
+                </div>
+            </div>
 
             <mat-action-row>
                 <div *ngIf="!ingresando">
@@ -120,48 +95,57 @@
             </mat-panel-title>
         </mat-expansion-panel-header>
         <form #formularioPass="ngForm" (ngSubmit)="cambiarPass()">
-            <table style="width:100%">
-                <tr>
-                    <td class="mobile-label">
-                        <span>Contraseña Antigua:</span>
-                    </td>
-                    <td>
-                        <mat-form-field>
-                            <input matInput name="antigua" placeholder="Ingrese Contraseña Antigua"
-                                [(ngModel)]="password.antigua" type="password" required>
-                        </mat-form-field>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mobile-label">
-                        <span>Contraseña Nueva:</span>
-                    </td>
-                    <td>
-                        <mat-form-field>
-                            <input matInput name="nueva" placeholder="Ingrese Contraseña Nueva"
-                                [(ngModel)]="password.nueva" type="password" required>
-                        </mat-form-field>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mobile-label">
-                        <span>Confirmar Contraseña:</span>
-                    </td>
-                    <td>
-                        <mat-form-field>
-                            <input matInput name="confirmacion" placeholder="Ingrese Contraseña Nueva"
-                                [(ngModel)]="password.confirmacion" type="password" required>
-                        </mat-form-field>
-                    </td>
-                </tr>
-            </table>
+            <div class="col-12 ">
+                <div class="row">
+                    <mat-label class="col-2 label mobile-label">Contraseña Antigua</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12">
+                        <input matInput name="antigua" placeholder="Ingrese Contraseña Antigua"
+                            [(ngModel)]="password.antigua" type="password" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-label class="col-2 label mobile-label">Contraseña Nueva</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12" >
+                        <input matInput name="nueva" placeholder="Ingrese Contraseña Nueva" [(ngModel)]="password.nueva"
+                            type="password" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-label class="col-2 label mobile-label">Confirmar Contraseña</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12">
+                        <input matInput name="confirmacion" placeholder="Reingrese Contraseña Nueva"
+                            [(ngModel)]="password.confirmacion" type="password" required>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <!-- <div class="col-12 mobile-display">
+                <div class="row">
+                    <mat-form-field class="col-12">
+                        <input matInput name="antigua" placeholder="Ingrese Contraseña Antigua"
+                            [(ngModel)]="password.antigua" type="password" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field class="col-12">
+                        <input matInput name="nueva" placeholder="Ingrese Contraseña Nueva" [(ngModel)]="password.nueva"
+                            type="password" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field class="col-12">
+                        <input matInput name="confirmacion" placeholder="Reingrese Contraseña Nueva"
+                            [(ngModel)]="password.confirmacion" type="password" required>
+                    </mat-form-field>
+                </div>
+            </div> -->
 
             <mat-action-row>
                 <div *ngIf="!ingresando">
-                    <!-- <button mat-raised-button>
-                        <mat-icon>cancel</mat-icon>
-                        <span style="margin-left: 8px;">Cancelar</span>
-                    </button> -->
                     <button type="submit" mat-raised-button color="primary">
                         <mat-icon>edit</mat-icon>
                         <span style="margin-left: 8px;">Editar Constraseña</span>

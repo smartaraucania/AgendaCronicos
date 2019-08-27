@@ -5,36 +5,70 @@
     </mat-card-title>
 
     <mat-card-content>
-        <table style="width:70%">
-            <tr>
-                <td><span>Nombre:</span></td>
-                <td><span>{{userLog.nombre}} {{userLog.apellido}}</span></td>
-            </tr>
-            <tr>
-                <td><span>Rut:</span></td>
-                <td><span>{{userLog.rut}}</span></td>
-            </tr>
-            <tr>
-                <td><span>Correo:</span></td>
-                <td><span>{{userLog.correo}}</span></td>
-            </tr>
-            <tr>
-                <td><span>Teléfono:</span></td>
-                <td><span>{{userLog.telefono}}</span></td>
-            </tr>
-            <tr *ngIf="userLog.rol==2">
-                <td><span>Dirección:</span></td>
-                <td><span>{{userLog.direccion}}</span></td>
-            </tr>
-            <tr *ngIf="userLog.rol==2">
-                <td><span>Fecha Nacimiento:</span></td>
-                <td><span>{{userLog.fechaNacimiento}}</span></td>
-            </tr>
-            <tr *ngIf="userLog.rol==2">
-                <td><span>Edad:</span></td>
-                <td><span>{{userLog.edad}}</span></td>
-            </tr>
-        </table>
+        <!-- vista web -->
+        <div class="col-12 web-display">
+            <div class="row">
+                <mat-label class="col-2 label ">Nombre</mat-label>
+                <mat-label class="col-8 ">{{userLog.nombre}} {{userLog.apellido}}</mat-label>
+            </div>
+            <div class="row">
+                <mat-label class="col-2 label ">Rut</mat-label>
+                <mat-label class="col-8 ">{{userLog.rut}}</mat-label>
+            </div>
+            <div class="row">
+                <mat-label class="col-2 label ">Correo</mat-label>
+                <mat-label class="col-8 ">{{userLog.correo}}</mat-label>
+            </div>
+            <div class="row">
+                <mat-label class="col-2 label ">Teléfono</mat-label>
+                <mat-label class="col-8 ">+56 {{userLog.telefono}}</mat-label>
+            </div>
+            <div class="row" *ngIf="userLog.rol==2">
+                <mat-label class="col-2 label ">Dirección</mat-label>
+                <mat-label class="col-8 ">{{userLog.direccion}}</mat-label>
+            </div>
+            <div class="row" *ngIf="userLog.rol==2">
+                <mat-label class="col-2 label ">Fecha Nacimiento</mat-label>
+                <mat-label class="col-8 ">{{userLog.fechaNacimiento}}</mat-label>
+            </div>
+            <div class="row" *ngIf="userLog.rol==2">
+                <mat-label class="col-2 label ">Edad</mat-label>
+                <mat-label class="col-8 ">{{userLog.edad}}</mat-label>
+            </div>
+        </div>
+
+        <!-- vista mobil -->
+        <div class="col-12 mobile-display">
+            <div class="row">
+                <mat-label class="col-8 label ">Nombre</mat-label>
+                <mat-label class="col-12 label">{{userLog.nombre}} {{userLog.apellido}}</mat-label>
+            </div><br>
+            <div class="row">
+                <mat-label class="col-8 label ">Rut</mat-label>
+                <mat-label class="col-12 label">{{userLog.rut}}</mat-label>
+            </div><br>
+            <div class="row">
+                <mat-label class="col-8 label ">Correo</mat-label>
+                <mat-label class="col-12 label">{{userLog.correo}}</mat-label>
+            </div><br>
+            <div class="row">
+                <mat-label class="col-8 label ">Teléfono</mat-label>
+                <mat-label class="col-12 label">{{userLog.telefono}}</mat-label>
+            </div><br *ngIf="userLog.rol==2" />
+            <div class="row" *ngIf="userLog.rol==2">
+                <mat-label class="col-8 label ">Dirección</mat-label>
+                <mat-label class="col-12 label">{{userLog.direccion}}</mat-label>
+            </div><br *ngIf="userLog.rol==2" />
+            <div class="row" *ngIf="userLog.rol==2">
+                <mat-label class="col-8 label ">Fecha Nacimiento</mat-label>
+                <mat-label class="col-12 label">{{userLog.fechaNacimiento}}</mat-label>
+            </div><br *ngIf="userLog.rol==2" />
+            <div class="row" *ngIf="userLog.rol==2">
+                <mat-label class="col-8 label ">Edad</mat-label>
+                <mat-label class="col-12 label">{{userLog.edad}}</mat-label>
+            </div>
+        </div>
+
     </mat-card-content>
 </mat-card>
 <mat-card class="m-2 mat-elevation-z4">
@@ -44,45 +78,87 @@
     </mat-card-title>
 
     <mat-card-content>
-        <table style="width:80%">
-            <tr>
-                <td><span>Cesfam:</span></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td><span style="margin-left:15px;">Nombre:</span></td>
-                <td><span>{{userLog.cesfam.nombre}}</span></td>
-            </tr>
-            <tr>
-                <td><span style="margin-left:15px;">Dirección:</span></td>
-                <td><span>{{userLog.cesfam.direccion}}</span></td>
-            </tr>
-            <tr>
-                <td><span style="margin-left:15px;">Teléfono:</span></td>
-                <td><span>{{userLog.cesfam.telefono}}</span></td>
-            </tr>
-            <tr *ngIf="userLog.rol==2">
-                <td><span>Enfermedad Crónica:</span></td>
-                <td><span>{{userLog.enfermedadCronica.enfermedad}}</span></td>
-            </tr>
-            <tr *ngIf="userLog.rol==2">
-                <td><span>Médico cabecera:</span></td>
-                <td></td>
-            </tr>
-            <tr *ngIf="userLog.rol==2">
-                <td><span style="margin-left:15px;">Nombre:</span></td>
-                <td><span> {{userLog.medicoCabecera.nombre}}
-                        {{userLog.medicoCabecera.apellido}}</span></td>
-            </tr>
-            <tr *ngIf="userLog.rol==2">
-                <td><span style="margin-left:15px;">Teléfono:</span></td>
-                <td><span>{{userLog.medicoCabecera.telefono}}</span></td>
-            </tr>
-            <tr *ngIf="userLog.rol==2">
-                <td><span style="margin-left:15px;">Correo:</span></td>
-                <td><span>{{userLog.medicoCabecera.correo}}</span></td>
-            </tr>
-        </table>
+        <!-- vista web -->
+        <div class="col-12 web-display">
+            <div class="row">
+                <mat-label class="col-2 "><strong>Cesfam</strong></mat-label>
+            </div>
+            <div class="row">
+                <mat-label class="col-2 label ">Nombre</mat-label>
+                <mat-label class="col-8 ">{{userLog.cesfam.nombre}}</mat-label>
+            </div>
+            <div class="row">
+                <mat-label class="col-2 label ">Dirección</mat-label>
+                <mat-label class="col-8 ">{{userLog.cesfam.direccion}}</mat-label>
+            </div>
+            <div class="row">
+                <mat-label class="col-2 label ">Teléfono</mat-label>
+                <mat-label class="col-8 ">{{userLog.cesfam.telefono}}</mat-label>
+            </div>
+            <br>
+            <div class="row" *ngIf="userLog.rol==2">
+                <mat-label class="col-2 label "><strong>Enfermedad Crónica</strong></mat-label>
+                <mat-label class="col-8 ">{{userLog.enfermedadCronica.enfermedad}}</mat-label>
+            </div>
+            <br>
+            <div class="row" *ngIf="userLog.rol==2">
+                <mat-label class="col-2 label "><strong>Médico Cabecera</strong></mat-label>
+            </div>
+            <div class="row" *ngIf="userLog.rol==2">
+                <mat-label class="col-2 label ">Nombre</mat-label>
+                <mat-label class="col-8 ">{{userLog.medicoCabecera.nombre}}
+                    {{userLog.medicoCabecera.apellido}}</mat-label>
+            </div>
+            <div class="row" *ngIf="userLog.rol==2">
+                <mat-label class="col-2 label ">Teléfono</mat-label>
+                <mat-label class="col-8 ">{{userLog.medicoCabecera.telefono}}</mat-label>
+            </div>
+            <div class="row" *ngIf="userLog.rol==2">
+                <mat-label class="col-2 label ">Correo</mat-label>
+                <mat-label class="col-8 ">{{userLog.medicoCabecera.correo}}</mat-label>
+            </div>
+        </div>
+
+        <!-- vista mobil -->
+        <div class="col-12 mobile-display">
+            <div class="row">
+                <mat-label class="col-8"><strong>Cesfam</strong></mat-label>
+            </div>
+            <div class="row" style="margin-bottom: 5px">
+                <mat-label class="col-8 label ">Nombre</mat-label>
+                <mat-label class="col-12 label">{{userLog.cesfam.nombre}}</mat-label>
+            </div>
+            <div class="row" style="margin-bottom: 5px">
+                <mat-label class="col-8 label ">Dirección</mat-label>
+                <mat-label class="col-12 label">{{userLog.cesfam.direccion}}</mat-label>
+            </div>
+            <div class="row" style="margin-bottom: 5px">
+                <mat-label class="col-8 label " >Teléfono</mat-label>
+                <mat-label class="col-12 label">{{userLog.cesfam.telefono}}</mat-label>
+            </div>
+            <br>
+            <div class="row" *ngIf="userLog.rol==2" >
+                <mat-label class="col-12  "><strong>Enfermedad Crónica</strong></mat-label>
+                <mat-label class="col-12 label">{{userLog.enfermedadCronica.enfermedad}}</mat-label>
+            </div>
+            <br>
+            <div class="row" *ngIf="userLog.rol==2">
+                <mat-label class="col-8 "><strong>Médico Cabecera</strong></mat-label>
+            </div>
+            <div class="row" *ngIf="userLog.rol==2" style="margin-bottom: 5px">
+                <mat-label class="col-8 label ">Nombre</mat-label>
+                <mat-label class="col-12 label">{{userLog.medicoCabecera.nombre}}
+                    {{userLog.medicoCabecera.apellido}}</mat-label>
+            </div>
+            <div class="row" *ngIf="userLog.rol==2" style="margin-bottom: 5px">
+                <mat-label class="col-8 label ">Teléfono</mat-label>
+                <mat-label class="col-12 label">{{userLog.medicoCabecera.telefono}}</mat-label>
+            </div>
+            <div class="row" *ngIf="userLog.rol==2" style="margin-bottom: 5px">
+                <mat-label class="col-8 label ">Correo</mat-label>
+                <mat-label class="col-12 label">{{userLog.medicoCabecera.correo}}</mat-label>
+            </div>
+        </div>
     </mat-card-content>
 </mat-card>
 

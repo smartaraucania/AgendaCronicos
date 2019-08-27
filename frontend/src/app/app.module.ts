@@ -1,7 +1,6 @@
-import * as moment from 'moment';
-
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
@@ -98,7 +97,8 @@ import { ReagendarAtencionComponent } from './components/reagendar-atencion/reag
     MatNativeDateModule,
     MatRippleModule,
     MatSnackBarModule,
-    MatExpansionModule
+    MatExpansionModule,
+    IonicModule
   ],
   entryComponents: [
     FinalizarAtencionDialogComponent,

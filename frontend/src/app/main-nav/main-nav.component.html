@@ -16,12 +16,12 @@
         <mat-icon style="margin-right:5px;" aria-label="Side nav toggle icon">assignment</mat-icon>
         Mis Pacientes
       </a>
-      <!-- Paciente -->
+      
       <a *ngIf="userLog.rol==2" mat-list-item routerLink="/dashboard/historial">
         <mat-icon style="margin-right:5px;" aria-label="Side nav toggle icon">date_range</mat-icon>
         Mis Atenciones
       </a>
-      <!-- Medico -->
+      
       <a *ngIf="userLog.rol==1" mat-list-item routerLink="/dashboard/atenciones">
         <mat-icon style="margin-right:5px;">date_range</mat-icon>
         Mis Atenciones
@@ -42,6 +42,7 @@
 
 
       <a mat-list-item style="position: absolute; bottom: 20px;" (click)="cerrarSesion()">
+        <mat-icon style="margin-right:5px;color: blue;">exit_to_app</mat-icon>
         <span style="color: blue;">Cerrar Sesión</span>
       </a>
 
@@ -50,8 +51,7 @@
   <mat-sidenav-content>
     <mat-toolbar color="primary">
       <div *ngIf="parent == true">
-        <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
-          >
+        <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
           <!-- *ngIf="isHandset$ | async" -->
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
@@ -64,6 +64,84 @@
       <span>{{titulo}}</span>
     </mat-toolbar>
     <router-outlet></router-outlet>
-    <!-- Add Content Here -->
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<!-- <ion-menu side="start" type="push" class="my-custom-menu">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list lines="none">
+      <ion-item routerLink="/dashboard/">
+        <mat-icon style="margin-right:5px;" aria-label="Side nav toggle icon">home</mat-icon>
+        <ion-label>Inicio</ion-label>
+      </ion-item>
+      <ion-item routerLink="/dashboard/">
+        <mat-icon style="margin-right:5px;" aria-label="Side nav toggle icon">notifications</mat-icon>
+        <ion-label>Notificaciones</ion-label>
+      </ion-item>
+      <ion-item *ngIf="userLog.rol==1" routerLink="/dashboard/fichas">
+        <mat-icon style="margin-right:5px;" aria-label="Side nav toggle icon">assignment</mat-icon>
+        <ion-label>Mis Pacientes</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="userLog.rol==1" (click)="backButton('/dashboard/fichas')">
+        <mat-icon style="margin-right:5px;" aria-label="Side nav toggle icon">assignment</mat-icon>
+        <ion-label>Mis Pacientes</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="userLog.rol==2" routerLink="/dashboard/historial">
+        <mat-icon style="margin-right:5px;" aria-label="Side nav toggle icon">date_range</mat-icon>
+        <ion-label>Mis Atenciones</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="userLog.rol==1" routerLink="/dashboard/atenciones">
+        <mat-icon style="margin-right:5px;" aria-label="Side nav toggle icon">date_range</mat-icon>
+        <ion-label>Mis Atenciones</ion-label>
+      </ion-item>
+
+      <ion-item routerLink="/dashboard/noticias">
+        <mat-icon style="margin-right:5px;" aria-label="Side nav toggle icon">forum</mat-icon>
+        <ion-label>Noticias</ion-label>
+      </ion-item>
+
+    </ion-list>
+    <ion-list lines="none">
+     
+      <ion-item routerLink="/dashboard/perfil">
+        <mat-icon style="margin-right:5px;" aria-label="Side nav toggle icon">account_circle</mat-icon>
+        <ion-label>Perfil</ion-label>
+      </ion-item>
+
+      <ion-item routerLink="/dashboard/">
+        <mat-icon style="margin-right:5px;" aria-label="Side nav toggle icon">settings</mat-icon>
+        <ion-label>Configuración</ion-label>
+      </ion-item>
+
+      <ion-item (click)="cerrarSesion()">
+        <mat-icon style="margin-right:5px;color: blue;">exit_to_app</mat-icon>
+        <ion-label>Cerrar Sesión</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<div class="ion-page" main>
+  <ion-content>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-button>
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </ion-menu-button>
+        <ion-back-button text="/dashboard/historial" icon="arrow-back"></ion-back-button>
+      </ion-buttons>
+      <ion-title>{{titulo}}</ion-title>
+    </ion-toolbar>
+
+    <router-outlet></router-outlet>
+
+  </ion-content>
+</div> -->

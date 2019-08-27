@@ -12,7 +12,7 @@ const justificacionController = require('../controllers/justificacionController'
 const noticiasController = require('../controllers/noticiasController');
 const atencionController = require('../controllers/atencionController');
 const notificacionController = require('../controllers/notificacionController');
-const googleCalendarController = require('../controllers/googleCalendarController');
+const calendarioController = require('../controllers/calendarioController');
 
 //cesfam routes
 publicRouter.get('/cesfams',cesfamController.getAllCesfams);
@@ -52,7 +52,7 @@ publicRouter.post('/atencion/disponibles',atencionController.getAtencionesDispon
 //notificacion routes
 publicRouter.post('/notificacion', notificacionController.createNotificacion);
 
-publicRouter.get('/calendario/eventos',googleCalendarController.getAllEvents);
+publicRouter.post('/calendario/evento', calendarioController.createEvent);
 
 
 module.exports = publicRouter;

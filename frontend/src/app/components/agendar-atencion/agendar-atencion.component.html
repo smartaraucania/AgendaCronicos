@@ -2,35 +2,38 @@
     <form #formulario="ngForm" (ngSubmit)="onSubmit()">
 
         <mat-card-content>
+            <div class="col-12">
 
-            <div class="row">
-                <div class="col-2 mobile-label">
-                    <span>Fecha atención:</span>
+                <div class="row">
+                    <mat-label class="col-2 label mobile-label">Fecha atención</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12">
+                        <input name="fecha" [(ngModel)]="objeto.fecha" matInput [matDatepicker]="picker" [min]="minDate"
+                            placeholder="Seleccionar Fecha" (dateInput)="addEvent('input', $event)" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi #picker disabled=false></mat-datepicker>
+                    </mat-form-field>
                 </div>
-                <mat-form-field class="col-10">
-                    <input name="fecha" [(ngModel)]="objeto.fecha" matInput [matDatepicker]="picker" [min]="minDate"
-                        placeholder="Seleccionar Fecha" (dateInput)="addEvent('input', $event)" required>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker touchUi #picker disabled=false></mat-datepicker>
-                </mat-form-field>
-                <div class="col-2 mobile-label">
-                    <span >Hora atención:</span><br />
+
+                <div class="row">
+                    <mat-label class="col-2 label mobile-label">Hora atención</mat-label>
+                    <mat-form-field class="col-sm-8 col-xs-12">
+                        <mat-label>Horas Disponibles</mat-label>
+                        <mat-select [disabled]="horas.length==0" name="hora" [(ngModel)]="objeto.hora" required>
+                            <mat-option *ngFor="let hora of horas" [disabled]="!hora.disp" [value]="hora.horaVista">
+                                <span *ngIf="!hora.disp" style="color: #a79f9e;">{{hora.horaVista}}</span>
+                                <span *ngIf="hora.disp">{{hora.horaVista}}</span>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
-                <mat-form-field class="col-10">
-                    <mat-label>Horas Disponibles</mat-label>
-                    <mat-select [disabled]="horas.length==0" name="hora" [(ngModel)]="objeto.hora" required>
-                        <mat-option *ngFor="let hora of horas" [disabled]="!hora.disp" [value]="hora.horaVista">
-                            <span *ngIf="!hora.disp" style="color: #a79f9e;">{{hora.horaVista}}</span>
-                            <span *ngIf="hora.disp">{{hora.horaVista}}</span>
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <div *ngIf="userLog.rol == 1" class="col-2 mobile-label">
-                    <span>Paciente</span>
+
+                <div class="row">
+                    <mat-label class="col-2 label mobile-label">Paciente</mat-label>
+                    <mat-form-field *ngIf="userLog.rol == 1" class="col-sm-8 col-xs-12">
+                        <input matInput name="rut" placeholder="Ingrese rut paciente" [(ngModel)]="objeto.rut" required>
+                    </mat-form-field>
                 </div>
-                <mat-form-field *ngIf="userLog.rol == 1" class="col-10">
-                    <input matInput name="rut" placeholder="Ingrese rut paciente" [(ngModel)]="objeto.rut" required>
-                </mat-form-field>
+
             </div>
 
         </mat-card-content>

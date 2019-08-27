@@ -9,6 +9,9 @@ import { Observable } from 'rxjs';
 
 export class AuthService {
 
+  // public url = 'http://localhost:4000/';
+  public url = 'http://54.85.148.66:4000/';
+
   constructor(
     private http: HttpClient
   ) { }
@@ -21,7 +24,7 @@ export class AuthService {
       })
     };
 
-    return this.http.post('http://localhost:4000/auth/login', {
+    return this.http.post(this.url + 'auth/login', {
       rut: rutInput,
       password: passwordInput
     }, httpOptions);
