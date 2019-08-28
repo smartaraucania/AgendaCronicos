@@ -24,8 +24,8 @@ function createEvent(req, res) {
             return res.status(500).send(error);
         }
 
-        writeFileSync(`C:/Users/Carlos/Desktop/event.ics`, value);
-        return res.status(201).send({ value });
+        const file = writeFileSync(`event.ics`, value);
+        return res.status(201).send(file);
     });
 
 }
