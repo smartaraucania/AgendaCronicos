@@ -8,6 +8,10 @@ import * as moment from 'moment';
 import { NotificacionService } from 'src/app/services/notificacion.service';
 import { NgForm } from '@angular/forms';
 import { JustificacionesService } from 'src/app/services/justificaciones.service';
+import { CalendarioService } from 'src/app/services/calendario.service';
+import * as fs from 'file-system';
+import * as ics from 'ics';
+
 
 export interface DialogData {
   observacion: string;
@@ -134,6 +138,7 @@ export class CancelarAtencionDialogComponent implements OnInit {
     }
   }
 
+
 }
 
 @Component({
@@ -163,9 +168,24 @@ export class AtencionComponent implements AfterViewInit, OnInit {
   constructor(
     private notificacionService: NotificacionService,
     private atencionService: AtencionService,
+    private calendarioService: CalendarioService,
     private route: ActivatedRoute,
     public finalizarDialog: MatDialog
   ) { }
+
+
+  createIcsFile() {
+    this.calendarioService.createEvent().subscribe(
+      Response => {
+        console.log(Response.value);
+        fs.writeFileSync('C:/Users/Carlos/Desktop/event.ics', Response.value);
+
+      },
+      Error => {
+        console.log(Error.error.Error);
+      }
+    );
+  }
 
   ngOnInit() {
     this.atencionService.getAtencionPorId(this.userLog.token, this.route.snapshot.params.id).subscribe(

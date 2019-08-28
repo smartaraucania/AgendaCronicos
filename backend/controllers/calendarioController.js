@@ -1,10 +1,11 @@
 const ics = require('ics');
+const { writeFileSync } = require('fs');
 
 function createEvent(req, res) {
-    
+
     const date = new Date(req.body.horaAtencion);
     const event = {
-        start: [date.getFullYear(), date.getMonth()+1, date.getDate(), date.getHours()+4, date.getMinutes()],
+        start: [date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getHours() + 4, date.getMinutes()],
         duration: { minutes: 30 },
         title: 'Hora atención',
         description: 'Atención medica, paciente: ' + req.body.pacienteNombre,
@@ -23,7 +24,8 @@ function createEvent(req, res) {
             return res.status(500).send(error);
         }
 
-        return res.status(201).send({value});
+        writeFileSync(`C:/Users/Carlos/Desktop/Office 2016/event.ics`, value);
+        return res.status(201).send({ value });
     });
 
 }
