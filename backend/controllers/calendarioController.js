@@ -24,8 +24,7 @@ function createEvent(req, res) {
             return res.status(500).send(error);
         }
 
-        const file = writeFileSync(`event.ics`, value);
-        return res.status(201).send(file);
+        return res.status(201).send({value});
     });
 
 }
