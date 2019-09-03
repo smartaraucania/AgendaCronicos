@@ -11,10 +11,10 @@ var moment = require('moment');
 function getTweets(req, res) {
     //Twitter.js
     var client = new Twitter({
-        consumer_key: config.twitterApikey,
-        consumer_secret: config.twitterApikeySecret,
-        access_token_key: config.twitterAccesstoken,
-        access_token_secret: config.twitterAccesstokenSecret
+        consumer_key: config.twitter.apikey,
+        consumer_secret: config.twitter.apikeySecret,
+        access_token_key: config.twitter.accesstoken,
+        access_token_secret: config.twitter.accesstokenSecret
     });
     var params = {
         screen_name: 'DSMTemuco',

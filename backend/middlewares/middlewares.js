@@ -17,7 +17,7 @@ function isAuth(req, res, next){
     }
 
     const token = req.headers.authorization.split(" ")[1];
-    const payload = jwt.decode(token, config.secret);
+    const payload = jwt.decode(token, config.app.secret);
     
     User.findById(payload.id).exec((err,user)=>{
         if(err) return res.status(406).send({ 'Error': 'No se encontro un usuario asociado a la sesion' });

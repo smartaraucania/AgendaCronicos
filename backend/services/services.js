@@ -12,7 +12,7 @@ function createToken(user){
         rol: user.rol,
     }
 
-    var token = jwt.sign(payload, config.secret,{
+    var token = jwt.sign(payload, config.app.secret,{
         expiresIn: 60 * 60 * 24 // expires in 24 hours
     });
     return token;
