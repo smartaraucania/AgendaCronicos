@@ -12,8 +12,9 @@ authRouter.get('/google', passport.authenticate('google', {
     scope: ['profile']
 })
 );
-authRouter.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-    res.send('');
+// passport.authenticate('google'),
+authRouter.get('/google/redirect', (req, res) => {
+    res.send('autenticado');
 })
 
 module.exports = authRouter;
