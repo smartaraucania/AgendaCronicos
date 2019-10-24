@@ -10,6 +10,8 @@ const usuarioController = require('../controllers/usuarioController');
 const atencionController = require('../controllers/atencionController');
 const notificacionController = require('../controllers/notificacionController');
 
+const googleCalendar = require('../controllers/googleCalendarController');
+
 // roles: 1-Medico 2-Paciente
 
 //Paciente routes
@@ -45,5 +47,10 @@ protectedRouter.post('/paciente/agendar',middleware.isAuth,middleware.hasRole(2)
 //Notificaciones Routes
 protectedRouter.post('/notificaciones/paciente',middleware.isAuth,middleware.hasRole(2), notificacionController.getNotificacionesPaciente);
 protectedRouter.post('/notificaciones/doctor', middleware.isAuth, middleware.hasRole(1), notificacionController.getNotificacionesDoctor);
+
+//Calendario
+protectedRouter.post('/events',middleware.isAuth, googleCalendar.getEvents);
+protectedRouter.post('/event/add',middleware.isAuth, googleCalendar.addEvent);
+protectedRouter.post('/google/save', middleware.isAuth, googleCalendar.saveGoogleData);
 
 module.exports = protectedRouter;

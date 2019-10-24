@@ -21,6 +21,10 @@ const UsuarioSchema = Schema({
     direccion: String,
     telefono: {type:String, unique:true}, // D y P
     rol: {type:Number, require:true}, //1: doctor 2: paciente // D y P
+    googleAuth: {
+        accessToken: {type: String},
+        email: {type: String }
+    },
 });
 
 module.exports = mongoose.model('Usuario', UsuarioSchema);

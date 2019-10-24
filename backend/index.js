@@ -3,13 +3,13 @@
 const mongoose = require('mongoose');
 const app = require('./app');
 const config = require('./config');
-const cors = require('cors');
+
 
 const authRoutes = require('./routes/authRoutes');
 const protectedRoutes = require('./routes/protectedRoutes');
 const publicRoutes = require('./routes/publicRoutes');
 
-app.use(cors());
+
 const passportSetup = require('./google-passport-setup');
 app.use('/auth', authRoutes);
 app.use('/protected', protectedRoutes);
