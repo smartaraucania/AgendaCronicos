@@ -1,6 +1,6 @@
 # PCesfam
 
-#### Proyecto arientado al menejo y el control de las horas médicas de pacientes cronicos en el contexto de salud publica.
+#### Proyecto orientado al menejo y el control de las horas médicas de pacientes cronicos en el contexto de salud publica.
 
 ## **Backend**
 
