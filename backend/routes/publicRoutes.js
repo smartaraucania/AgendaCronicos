@@ -2,7 +2,6 @@
 
 const express = require('express');
 const publicRouter = express.Router();
-const middleware = require('../middlewares/middlewares');
 
 const cesfamController = require('../controllers/cesfamController');
 const enfermedadCronicaController = require('../controllers/enfermedadCronicaController');
@@ -12,7 +11,6 @@ const justificacionController = require('../controllers/justificacionController'
 const noticiasController = require('../controllers/noticiasController');
 const atencionController = require('../controllers/atencionController');
 const notificacionController = require('../controllers/notificacionController');
-const calendarioController = require('../controllers/calendarioController');
 
 //cesfam routes
 publicRouter.get('/cesfams',cesfamController.getAllCesfams);
@@ -52,7 +50,6 @@ publicRouter.post('/atencion/disponibles',atencionController.getAtencionesDispon
 //notificacion routes
 publicRouter.post('/notificacion', notificacionController.createNotificacion);
 
-publicRouter.post('/calendario/evento', calendarioController.createEvent);
 
 
 module.exports = publicRouter;

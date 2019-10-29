@@ -102,7 +102,7 @@ export class ReagendarAtencionComponent implements OnInit {
                 this.notifTitulo, this.notifText, this.data.atencion.paciente._id,
                 this.horaFormatNow, this.fechaFormatNow, Response._id).subscribe(
                   ResponseNotif => {
-                    console.log('notificacion creada');
+
                   }
                 );
             } else if (this.userLog.rol === 2) {
@@ -117,7 +117,7 @@ export class ReagendarAtencionComponent implements OnInit {
                 this.notifTitulo, this.notifText, this.data.atencion.doctor._id,
                 this.horaFormatNow, this.fechaFormatNow, Response._id).subscribe(
                   ResponseNotif => {
-                    console.log('notificacion creada');
+
                   }
                 );
             }

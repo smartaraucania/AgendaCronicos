@@ -88,11 +88,10 @@ export class AgendarAtencionComponent implements OnInit {
                   this.notifTitulo, this.notifText, Response._id,
                   this.horaFormatNow, this.fechaFormatNow, ResponseAtencion._id).subscribe(
                     ResponseNotif => {
-                      console.log(ResponseNotif);
-                      console.log('notificacion creada');
+
                     },
                     ErrorNotif => {
-                      console.log(ErrorNotif);
+
                     }
                   );
                 this.snackBar.open('Atencion agendada correctamente', 'X', {
@@ -129,11 +128,10 @@ export class AgendarAtencionComponent implements OnInit {
                 this.notifTitulo, this.notifText, this.userLog.medicoCabecera._id,
                 this.horaFormatNow, this.fechaFormatNow, Response._id).subscribe(
                   ResponseNotif => {
-                    console.log(ResponseNotif);
-                    console.log('notificacion creada');
+
                   },
                   ErrorNotif => {
-                    console.log(ErrorNotif);
+
                   }
                 );
 

@@ -6,36 +6,37 @@
         </mat-card-title>
 
         <mat-card-content>
-            <table style="width:70%">
-                <tr>
-                    <td><span><strong>Nombre:</strong></span></td>
-                    <td><span>{{paciente.nombre}} {{paciente.apellido}}</span></td>
-                </tr>
-                <tr>
-                    <td><span><strong>Rut:</strong></span></td>
-                    <td><span>{{paciente.rut}}</span></td>
-                </tr>
-                <tr>
-                    <td><span><strong>Correo:</strong></span></td>
-                    <td><span>{{paciente.correo}}</span></td>
-                </tr>
-                <tr>
-                    <td><span><strong>Teléfono:</strong></span></td>
-                    <td><span>{{paciente.telefono}}</span></td>
-                </tr>
-                <tr>
-                    <td><span><strong>Dirección:</strong></span></td>
-                    <td><span>{{paciente.direccion}}</span></td>
-                </tr>
-                <tr>
-                    <td><span><strong>Fecha Nacimiento:</strong></span></td>
-                    <td><span>{{paciente.fechaNacimiento}}</span></td>
-                </tr>
-                <tr>
-                    <td><span><strong>Edad:</strong></span></td>
-                    <td><span>{{paciente.edad}}</span></td>
-                </tr>
-            </table>
+                <!-- web-display -->
+            <div class="col-12 ">
+                <div class="row separate ">
+                    <mat-label class="col-sm-2 col-xs-12 label mobile-data">Nombre</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 ">{{paciente.nombre}} {{paciente.apellido}}</mat-label>
+                </div>
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label mobile-data">Rut</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 ">{{paciente.rut}}</mat-label>
+                </div>
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label mobile-data">Correo</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 ">{{paciente.correo}}</mat-label>
+                </div>
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label mobile-data">Teléfono</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 ">{{paciente.telefono}}</mat-label>
+                </div>
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label mobile-data">Dirección</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 ">{{paciente.direccion}}</mat-label>
+                </div>
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label mobile-data">Fecha Nacimiento</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 ">{{paciente.fechaNacimiento}}</mat-label>
+                </div>
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label mobile-data">Edad</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 ">{{paciente.edad}}</mat-label>
+                </div>
+            </div>
         </mat-card-content>
     </mat-card>
     <mat-card class="m-2 mat-elevation-z4">
@@ -45,46 +46,45 @@
         </mat-card-title>
 
         <mat-card-content>
-
-            <table style="width:80%">
-                <tr>
-                    <td><span><strong>Cesfam:</strong></span></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><span style="margin-left:15px;"><strong>Nombre:</strong></span></td>
-                    <td><span>{{paciente.cesfam.nombre}}</span></td>
-                </tr>
-                <tr>
-                    <td><span style="margin-left:15px;"><strong>Dirección:</strong></span></td>
-                    <td><span>{{paciente.cesfam.direccion}}</span></td>
-                </tr>
-                <tr>
-                    <td><span style="margin-left:15px;"><strong>Teléfono:</strong></span></td>
-                    <td><span>{{paciente.cesfam.telefono}}</span></td>
-                </tr>
-                <tr>
-                    <td><span><strong>Enfermedad Crónica:</strong></span></td>
-                    <td><span>{{paciente.enfermedadCronica.enfermedad}}</span></td>
-                </tr>
-                <tr>
-                    <td><span><strong>Médico cabecera:</strong></span></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><span style="margin-left:15px;"><strong>Nombre:</strong></span></td>
-                    <td><span> {{paciente.medicoCabecera.nombre}}
-                            {{paciente.medicoCabecera.apellido}}</span></td>
-                </tr>
-                <tr>
-                    <td><span style="margin-left:15px;"><strong>Teléfono:</strong></span></td>
-                    <td><span>{{paciente.medicoCabecera.telefono}}</span></td>
-                </tr>
-                <tr>
-                    <td><span style="margin-left:15px;"><strong>Correo:</strong></span></td>
-                    <td><span>{{paciente.medicoCabecera.correo}}</span></td>
-                </tr>
-            </table>
+            <div class="col-12">
+                <div class="row">
+                    <mat-label class="col-sm-2 col-xs-12 "><strong>Cesfam</strong></mat-label>
+                </div>
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label tabulation mobile-subdata">Nombre</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 tabulation">{{paciente.cesfam.nombre}}</mat-label>
+                </div>
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label tabulation mobile-subdata">Dirección</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 tabulation">{{paciente.cesfam.direccion}}</mat-label>
+                </div>
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label tabulation mobile-subdata">Teléfono</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 tabulation">{{paciente.cesfam.telefono}}</mat-label>
+                </div>
+                <br>
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12"><strong>Enfermedad Crónica</strong></mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 tabulation">{{paciente.enfermedadCronica.enfermedad}}</mat-label>
+                </div>
+                <br>
+                <div class="row">
+                    <mat-label class="col-sm-2 col-xs-12 "><strong>Médico cabecera</strong></mat-label>
+                </div>
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label tabulation mobile-subdata">Nombre</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 tabulation">{{paciente.medicoCabecera.nombre}}
+                        {{paciente.medicoCabecera.apellido}}</mat-label>
+                </div>
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label tabulation mobile-subdata">Teléfono</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 tabulation">{{paciente.medicoCabecera.telefono}}</mat-label>
+                </div>
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label tabulation mobile-subdata">Correo</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 tabulation">{{paciente.medicoCabecera.correo}}</mat-label>
+                </div>
+            </div>
 
         </mat-card-content>
     </mat-card>

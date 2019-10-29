@@ -9,8 +9,6 @@ const authRoutes = require('./routes/authRoutes');
 const protectedRoutes = require('./routes/protectedRoutes');
 const publicRoutes = require('./routes/publicRoutes');
 
-
-const passportSetup = require('./google-passport-setup');
 app.use('/auth', authRoutes);
 app.use('/protected', protectedRoutes);
 app.use('/public', publicRoutes);

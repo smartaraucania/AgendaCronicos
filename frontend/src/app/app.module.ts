@@ -46,6 +46,25 @@ import { EditarPerfilComponent } from './components/editar-perfil/editar-perfil.
 import { NoticiasComponent } from './components/noticias/noticias.component';
 import { ReagendarAtencionComponent } from './components/reagendar-atencion/reagendar-atencion.component';
 
+import { SocialLoginModule, AuthServiceConfig, LoginOpt } from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
+
+
+const googleLoginOptions: LoginOpt = {
+  scope: 'profile email https://www.googleapis.com/auth/calendar'
+};
+
+const config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider('1087058763481-3ff95t8d3kreenr2huvl072tlcu2qa9i.apps.googleusercontent.com', googleLoginOptions)
+  }
+]);
+
+export function provideConfig() {
+  return config;
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -98,14 +117,20 @@ import { ReagendarAtencionComponent } from './components/reagendar-atencion/reag
     MatRippleModule,
     MatSnackBarModule,
     MatExpansionModule,
-    IonicModule
+    IonicModule,
+    SocialLoginModule
   ],
   entryComponents: [
     FinalizarAtencionDialogComponent,
     ReagendarAtencionComponent,
     CancelarAtencionDialogComponent
   ],
-  providers: [],
+  providers: [
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

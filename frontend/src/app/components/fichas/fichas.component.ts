@@ -49,7 +49,6 @@ export class FichasComponent implements AfterViewInit, OnInit {
 
       },
       Error => {
-        console.log(Error);
         this.snackBar.open(Error.error.Error, 'X', {
           duration: 5000,
         });

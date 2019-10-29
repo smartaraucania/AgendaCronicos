@@ -4,6 +4,11 @@
     flex-flow: row wrap;
     position: relative;
 }
+
+.label {
+  align-self: center;
+  margin-left: 20px;
+}
   
 .item {
     margin: 4px;
@@ -28,7 +33,29 @@
       display: inline-block;
       font-weight: bold;
     }
-  
+    
+    .mobile-data {
+      font-weight: bold;
+    }
+
+    .mobile-subdata{
+      font-weight: bold;
+      font-style: italic;
+    }
+
+    .separate {
+      margin-bottom: 8px;
+    }
+
+    .label {
+      align-self: center;
+      margin-left: 0px;
+    }
+
+    .tabulation {
+      margin-left: 6px;
+    }
+
     .mat-header-row {
       display: none;
     }
@@ -36,7 +63,7 @@
     .mat-row { 
       flex-direction: column;
       align-items: start;
-      padding: 8px 24px;
+      // padding: 8px 24px;
       min-height: min-content;
     }
 
@@ -48,4 +75,8 @@
     .mat-cell:first-of-type {
         padding-left: 0px;
     }
+
+    .mat-form-field {
+      margin: 0 auto;
+  }
 }

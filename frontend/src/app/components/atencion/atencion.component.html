@@ -6,43 +6,42 @@
         </mat-card-title>
 
         <mat-card-content>
-            <button mat-raised-button (click)="createIcsFile()">calendario</button>
-
-            <table style="width:70%">
-                <tr>
-                    <td><span><strong>Fecha:</strong></span></td>
-                    <td><span>{{atencion.fecha}}</span></td>
-                </tr>
-                <tr>
-                    <td><span><strong>Hora:</strong></span></td>
-                    <td><span>{{atencion.hora}}</span></td>
-                </tr>
-                <tr>
-                    <td><span><strong>Estado:</strong></span></td>
-                    <td *ngIf="atencion.estado==0"><span style="color: #0fb200;">Agendada</span></td>
-                    <td *ngIf="atencion.estado==1"><span style="color: #0fb200;">En Transcurso</span></td>
-                    <td *ngIf="atencion.estado==2"><span style="color: #002ab2;">Finalizada</span></td>
-                    <td *ngIf="atencion.estado==3"><span style="color: #f83232;">Cancelada</span></td>
-                    <td *ngIf="atencion.estado==4"><span style="color: #ebde29;">Reagendada</span></td>
-                </tr>
-                <tr>
-                    <td><span><strong>Agendada Por:</strong></span></td>
-                    <td *ngIf="atencion.agendadaPor==1"><span>Doctor</span></td>
-                    <td *ngIf="atencion.agendadaPor==2"><span>Paciente</span></td>
-                </tr>
-                <tr>
-                    <td><span></span></td>
-                    <td><span></span></td>
-                </tr>
-                <tr>
-                    <td><span><strong>Paciente:</strong></span></td>
-                    <td><span>{{atencion.paciente.nombre}} {{atencion.paciente.apellido}}</span></td>
-                </tr>
-                <tr>
-                    <td><span><strong>Doctor:</strong></span></td>
-                    <td><span>{{atencion.doctor.nombre}} {{atencion.doctor.apellido}}</span></td>
-                </tr>
-            </table>
+            <div class="col-12 web-display">
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label mobile-data">Fecha</mat-label>
+                    <mat-label class="col-8 ">{{atencion.fecha}}</mat-label>
+                </div>
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label mobile-data ">Hora</mat-label>
+                    <mat-label class="col-8 ">{{atencion.hora}}</mat-label>
+                </div>
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label mobile-data">Estado</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 label " *ngIf="atencion.estado==0" style="color: #0fb200;">
+                        Agendada</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 label " *ngIf="atencion.estado==1" style="color: #0fb200;">En
+                        Transcurso</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 label " *ngIf="atencion.estado==2" style="color: #002ab2;">
+                        Finalizada</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 label " *ngIf="atencion.estado==3" style="color: #f83232;">
+                        Cancelada</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 label " *ngIf="atencion.estado==4" style="color: #ebde29;">
+                        Reagendada</mat-label>
+                </div>
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label mobile-data">Agendada Por:</mat-label>
+                    <mat-label class="col-sm-2 col-xs-12 label " *ngIf="atencion.agendadaPor==1">Doctor</mat-label>
+                    <mat-label class="col-sm-2 col-xs-12 label " *ngIf="atencion.agendadaPor==2">Paciente</mat-label>
+                </div>
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label mobile-data">Paciente</mat-label>
+                    <mat-label class="col-8 ">{{atencion.paciente.nombre}} {{atencion.paciente.apellido}}</mat-label>
+                </div>
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label mobile-data">Doctor</mat-label>
+                    <mat-label class="col-8 ">{{atencion.doctor.nombre}} {{atencion.doctor.apellido}}</mat-label>
+                </div>
+            </div>
         </mat-card-content>
         <mat-card-actions>
             <div fxLayout="row" fxLayoutAlign="center">
@@ -110,88 +109,36 @@
         </mat-card-title>
 
         <mat-card-content>
-            <!-- version web -->
-            <div class="web-view">
-                <div class="row" *ngIf="atencion.estado==2 && userLog.rol==1">
-                    <div class="col-8">
-                        <span><strong>Resolución de atención</strong></span>
-                    </div>
+            <div class="col-12 web-display" *ngIf="atencion.estado==2 && userLog.rol==1">
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 "><strong>Resolución de atención</strong></mat-label>
                 </div>
-                <div class="row" *ngIf="atencion.estado==2 && userLog.rol==1">
-                    <div class="col-3">
-                        <p style="margin-left: 10px">Observación:</p>
-                    </div>
-                    <div class="col-8">
-                        <p>{{atencion.observacion}}</p>
-                    </div>
-                </div>
-                <div class="row" *ngIf="atencion.justificacion != null">
-                    <div class="col-8">
-                        <p *ngIf="atencion.estado != 3"><strong>Motivo reagendación:</strong></p>
-                        <p *ngIf="atencion.estado == 3"><strong>Motivo cancelación:</strong></p>
-                    </div>
-                </div>
-                <div class="row" *ngIf="atencion.justificacion != null">
-                    <div class="col-3">
-                        <span style="margin-left: 10px"><strong>Justificación:</strong></span>
-                    </div>
-                    <div class="col-8">
-                        <span>{{atencion.justificacion.justificacion}}</span>
-                    </div>
-                </div>
-                <div class="row" *ngIf="atencion.observacion_justificacion != null">
-                    <div class="col-3">
-                        <span style="margin-left: 10px"><strong>Observación</strong></span>
-                    </div>
-                    <div class="col-8">
-                        <span>{{atencion.observacion_justificacion}}</span>
-                    </div>
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label tabulation mobile-subdata">Observación</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 tabulation">{{atencion.observacion}}</mat-label>
                 </div>
             </div>
-            <!-- fin version web -->
-            <!-- version movil -->
-            <div class="mobile-view">
-                <div class="row" *ngIf="atencion.estado==2 && userLog.rol==1">
-                    <div class="col-12" style="text-align: center;">
-                        <span><strong>Resolución de atención</strong></span>
-                        <hr />
-                    </div>
+            <br>
+            <div class="col-12" *ngIf="atencion.justificacion != null">
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label " *ngIf="atencion.estado != 3"><strong>Motivo
+                            reagendación</strong>
+                    </mat-label>
+                    <mat-label class="col-sm-2 col-xs-12 label " *ngIf="atencion.estado == 3"><strong>Motivo
+                            cancelación</strong>
+                    </mat-label>
                 </div>
-                <div class="row" style="text-align: center;" *ngIf="atencion.estado==2 && userLog.rol==1">
-                    <div class="col-12">
-                        <span><strong>Observación:</strong></span>
-                    </div>
-                    <div class="col-12">
-                        <span>{{atencion.observacion}}</span>
-                    </div>
+                <div class="row separate">
+                    <mat-label class="col-sm-2 col-xs-12 label tabulation mobile-subdata">Justificación</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 tabulation">{{atencion.justificacion.justificacion}}
+                    </mat-label>
                 </div>
-                <br />
-                <div class="row" *ngIf="atencion.justificacion != null">
-                    <div class="col-12" style="text-align: center;">
-                        <span *ngIf="atencion.estado != 3"><strong>Motivo reagendación</strong></span>
-                        <span *ngIf="atencion.estado == 3"><strong>Motivo cancelación</strong></span>
-                        <hr />
-                    </div>
+                <div class="row separate" *ngIf="atencion.observacion_justificacion != null">
+                    <mat-label class="col-sm-2 col-xs-12 label tabulation mobile-subdata">Observación</mat-label>
+                    <mat-label class="col-sm-8 col-xs-12 tabulation">{{atencion.observacion_justificacion}}</mat-label>
                 </div>
-                <div class="row" style="text-align: center;" *ngIf="atencion.justificacion != null">
-                    <div class="col-12">
-                        <span><strong>Justificación</strong></span>
-                    </div>
-                    <div class="col-12">
-                        <span>{{atencion.justificacion.justificacion}}</span>
-                    </div>
-                </div>
+            </div>
 
-                <div class="row" style="text-align: center;" *ngIf="atencion.observacion_justificacion != null">
-                    <div class="col-12">
-                        <span style="margin-left: 10px"><strong>Observación</strong></span>
-                    </div>
-                    <div class="col-12">
-                        <span>{{atencion.observacion_justificacion}}</span>
-                    </div>
-                </div>
-            </div>
-            <!-- fin version movil -->
         </mat-card-content>
         <mat-card-actions align="center">
 
@@ -206,29 +153,29 @@
                 <ng-container matColumnDef="estado">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Estado</mat-header-cell>
                     <mat-cell mat-cell *matCellDef="let row" data-label="estado">
-                        <span class="mobile-label">Estado:</span>
-                        <span class="mobile-data" *ngIf="row.estado==0" style="color: #0fb200;">Agendada</span>
-                        <span class="mobile-data" *ngIf="row.estado==1" style="color: #2d04c5;">En Transcurso</span>
-                        <span class="mobile-data" *ngIf="row.estado==2" style="color: #6b6d74;">Finalizada</span>
-                        <span class="mobile-data" *ngIf="row.estado==3" style="color: #f83232;">Cancelada</span>
-                        <span class="mobile-data" *ngIf="row.estado==4" style="color: #ebde29;">Reagendada</span>
+                        <span class="mobile-label mobile-data">Estado:</span>
+                        <span *ngIf="row.estado==0" style="color: #0fb200;">Agendada</span>
+                        <span *ngIf="row.estado==1" style="color: #2d04c5;">En Transcurso</span>
+                        <span *ngIf="row.estado==2" style="color: #6b6d74;">Finalizada</span>
+                        <span *ngIf="row.estado==3" style="color: #f83232;">Cancelada</span>
+                        <span *ngIf="row.estado==4" style="color: #ebde29;">Reagendada</span>
                     </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="cambiadoPor">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Efectuado por</mat-header-cell>
                     <mat-cell *matCellDef="let row" data-label="cambiadoPor">
-                        <span class="mobile-label">Efect. Por:</span>
-                        <span class="mobile-data" *ngIf="row.cambiadoPor==1">Doctor</span>
-                        <span class="mobile-data" *ngIf="row.cambiadoPor==2">Paciente</span>
+                        <span class="mobile-label mobile-data">Efect. Por:</span>
+                        <span *ngIf="row.cambiadoPor==1">Doctor</span>
+                        <span *ngIf="row.cambiadoPor==2">Paciente</span>
                     </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="horaCambio">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Última modificación</mat-header-cell>
                     <mat-cell *matCellDef="let row" data-label="horaCambio">
-                        <span class="mobile-label">Últ. Modif:</span>
-                        <span class="mobile-data">{{row.fechaCambio}} {{row.horaCambio}}</span>
+                        <span class="mobile-label mobile-data">Últ. Modif:</span>
+                        <span>{{row.fechaCambio}} {{row.horaCambio}}</span>
                     </mat-cell>
                 </ng-container>
 
@@ -242,4 +189,9 @@
             </mat-paginator>
         </mat-card-content>
     </mat-card>
+</div>
+<div style="position: fixed; right: 20px; bottom: 20px">
+    <button mat-fab color="warn" matTooltip="Agregar a google calendar" (click)="addToGoogle()">
+        <i class="fab fa-google"></i>
+    </button>
 </div>

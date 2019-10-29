@@ -22,37 +22,71 @@
 
             </mat-card-header>
             <mat-card-content>
+                <div class="web-display">
+                    <div fxLayout="row" fxLayoutAlign="center">
+                        <mat-label class="col-sm-1 col-xs-12 label tabulation mobile-subdata">Fecha:</mat-label>
+                        <mat-label class="col-sm-4 col-xs-12 tabulation">{{atencionActiva.fecha}}</mat-label>
 
-                <div fxLayout="row" fxLayoutAlign="center">
-                    <div class="col-1">
-                        <strong>Fecha:</strong>
+                        <mat-label class="col-sm-1 col-xs-12 label tabulation mobile-subdata">Doctor:</mat-label>
+                        <mat-label class="col-sm-4 col-xs-12 tabulation"> {{atencionActiva.doctor.nombre}}
+                            {{atencionActiva.doctor.apellido}}</mat-label>
                     </div>
-                    <div class="col-4">
-                        {{atencionActiva.fecha}}
-                    </div>
-                    <div class="col-1">
-                        <strong>Doctor:</strong>
-                    </div>
-                    <div class="col-4">
-                        {{atencionActiva.doctor.nombre}} {{atencionActiva.doctor.apellido}}
+
+                    <div fxLayout="row" fxLayoutAlign="center">
+                        <mat-label class="col-sm-1 col-xs-12 label tabulation mobile-subdata">Hora:</mat-label>
+                        <mat-label class="col-sm-4 col-xs-12 tabulation">{{atencionActiva.hora}}</mat-label>
+
+
+                        <mat-label class="col-sm-1 col-xs-12 label tabulation mobile-subdata">Estado:</mat-label>
+                        <mat-label class="col-sm-4 col-xs-12 label " *ngIf="atencionActiva.estado==0"
+                            style="color: #0fb200;">
+                            Agendada</mat-label>
+                        <mat-label class="col-sm-4 col-xs-12 label " *ngIf="atencionActiva.estado==1"
+                            style="color: #0fb200;">En
+                            Transcurso</mat-label>
+                        <mat-label class="col-sm-4 col-xs-12 label " *ngIf="atencionActiva.estado==2"
+                            style="color: #002ab2;">
+                            Finalizada</mat-label>
+                        <mat-label class="col-sm-4 col-xs-12 label " *ngIf="atencionActiva.estado==3"
+                            style="color: #f83232;">
+                            Cancelada</mat-label>
+                        <mat-label class="col-sm-4 col-xs-12 label " *ngIf="atencionActiva.estado==4"
+                            style="color: #ebde29;">
+                            Reagendada</mat-label>
                     </div>
                 </div>
-                <div fxLayout="row" fxLayoutAlign="center">
-                    <div class="col-1">
-                        <strong>Hora:</strong>
+
+                <div class="mobile-display">
+                    <div class="row separate">
+                        <mat-label class="col-sm-1 col-xs-12 label mobile-data">Fecha:</mat-label>
+                        <mat-label class="col-sm-4 col-xs-12 tabulation">{{atencionActiva.fecha}}</mat-label>
                     </div>
-                    <div class="col-4">
-                        {{atencionActiva.hora}}
+                    <div class="row separate">
+                        <mat-label class="col-sm-1 col-xs-12 label mobile-data">Hora:</mat-label>
+                        <mat-label class="col-sm-4 col-xs-12 ">{{atencionActiva.hora}}</mat-label>
                     </div>
-                    <div class="col-1">
-                        <strong>Estado:</strong>
+                    <div class="row separate">
+                        <mat-label class="col-sm-1 col-xs-12 label mobile-data">Doctor:</mat-label>
+                        <mat-label class="col-sm-4 col-xs-12 tabulation"> {{atencionActiva.doctor.nombre}}
+                            {{atencionActiva.doctor.apellido}}</mat-label>
                     </div>
-                    <div class="col-4">
-                        <span *ngIf="atencionActiva.estado==0" style="color: #0fb200;">Agendada</span>
-                        <span *ngIf="atencionActiva.estado==1" style="color: #0fb200;">En Transcurso</span>
-                        <span *ngIf="atencionActiva.estado==2" style="color: #002ab2;">Finalizada</span>
-                        <span *ngIf="atencionActiva.estado==3" style="color: #f83232;">Cancelada</span>
-                        <span *ngIf="atencionActiva.estado==4" style="color: #ebde29;">Reagendada</span>
+                    <div class="row">
+                        <mat-label class="col-sm-1 col-xs-12 label mobile-data">Estado:</mat-label>
+                        <mat-label class="col-sm-4 col-xs-12 label " *ngIf="atencionActiva.estado==0"
+                            style="color: #0fb200;">
+                            Agendada</mat-label>
+                        <mat-label class="col-sm-4 col-xs-12 label " *ngIf="atencionActiva.estado==1"
+                            style="color: #0fb200;">En
+                            Transcurso</mat-label>
+                        <mat-label class="col-sm-4 col-xs-12 label " *ngIf="atencionActiva.estado==2"
+                            style="color: #002ab2;">
+                            Finalizada</mat-label>
+                        <mat-label class="col-sm-4 col-xs-12 label " *ngIf="atencionActiva.estado==3"
+                            style="color: #f83232;">
+                            Cancelada</mat-label>
+                        <mat-label class="col-sm-4 col-xs-12 label " *ngIf="atencionActiva.estado==4"
+                            style="color: #ebde29;">
+                            Reagendada</mat-label>
                     </div>
                 </div>
             </mat-card-content>

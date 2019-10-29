@@ -2,16 +2,13 @@ import { Component, OnInit, ViewChild, AfterViewInit, Inject } from '@angular/co
 import { AtencionService } from 'src/app/services/atencion.service';
 import { ActivatedRoute } from '@angular/router';
 import { DataTableAtencionDataSource } from './atencion-datasource';
-import { MatTable, MatSort, MatPaginator, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatTable, MatSort, MatPaginator, MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { ReagendarAtencionComponent } from '../reagendar-atencion/reagendar-atencion.component';
 import * as moment from 'moment';
 import { NotificacionService } from 'src/app/services/notificacion.service';
 import { NgForm } from '@angular/forms';
 import { JustificacionesService } from 'src/app/services/justificaciones.service';
-import { CalendarioService } from 'src/app/services/calendario.service';
-import * as fs from 'file-system';
-import * as ics from 'ics';
-
+import { GoogleService } from 'src/app/services/google.service';
 
 export interface DialogData {
   observacion: string;
@@ -109,7 +106,7 @@ export class CancelarAtencionDialogComponent implements OnInit {
                 this.notifTitulo, this.notifText, this.data.atencion.paciente._id,
                 this.horaFormatNow, this.fechaFormatNow, Response._id).subscribe(
                   ResponseNotif => {
-                    console.log('notificacion creada');
+
                   }
                 );
             } else if (this.userLog.rol === 2) {
@@ -124,20 +121,18 @@ export class CancelarAtencionDialogComponent implements OnInit {
                 this.notifTitulo, this.notifText, this.data.atencion.doctor._id,
                 this.horaFormatNow, this.fechaFormatNow, Response._id).subscribe(
                   ResponseNotif => {
-                    console.log('notificacion creada');
+
                   }
                 );
             }
             this.dialogRef.close(true);
           },
           Error => {
-            console.log(Error);
             this.dialogRef.close(true);
           }
         );
     }
   }
-
 
 }
 
@@ -168,24 +163,11 @@ export class AtencionComponent implements AfterViewInit, OnInit {
   constructor(
     private notificacionService: NotificacionService,
     private atencionService: AtencionService,
-    private calendarioService: CalendarioService,
     private route: ActivatedRoute,
-    public finalizarDialog: MatDialog
+    private googleService: GoogleService,
+    public finalizarDialog: MatDialog,
+    private snackBar: MatSnackBar,
   ) { }
-
-
-  createIcsFile() {
-    this.calendarioService.createEvent().subscribe(
-      Response => {
-        console.log(Response.value);
-        fs.writeFileSync('C:/Users/Carlos/Desktop/event.ics', Response.value);
-
-      },
-      Error => {
-        console.log(Error.error.Error);
-      }
-    );
-  }
 
   ngOnInit() {
     this.atencionService.getAtencionPorId(this.userLog.token, this.route.snapshot.params.id).subscribe(
@@ -206,6 +188,25 @@ export class AtencionComponent implements AfterViewInit, OnInit {
       });
   }
 
+  addToGoogle() {
+    if (this.userLog.googleAuth != null) {
+      this.googleService.addEvent(this.userLog.token, this.userLog.googleAuth.accessToken,
+        this.userLog.googleAuth.email, 'Atención ' + this.atencion.paciente.nombre + ' ' +
+      this.atencion.paciente.apellido, this.atencion.fechaFormat).subscribe(
+        Response => {
+          this.snackBar.open('Atención agregada a Google Calendar', 'X', {
+            duration: 5000,
+          });
+        },
+        Error => {
+          this.snackBar.open(Error.error.Error, 'X', {
+            duration: 5000,
+          });
+        }
+      );
+    }
+  }
+
   openReagendarDialog(): void {
     const dialogRef = this.finalizarDialog.open(ReagendarAtencionComponent, {
       width: 'calc(100%-10px)',
@@ -221,7 +222,7 @@ export class AtencionComponent implements AfterViewInit, OnInit {
         this.ngOnInit();
         this.ngAfterViewInit();
       } else {
-        console.log('ya valistes');
+
       }
 
     });
@@ -234,7 +235,7 @@ export class AtencionComponent implements AfterViewInit, OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+
       this.observacion = result;
 
       if (this.observacion != null) {
@@ -252,7 +253,7 @@ export class AtencionComponent implements AfterViewInit, OnInit {
                 this.notifTitulo, this.notifText, this.atencion.paciente._id,
                 this.horaFormatNow, this.fechaFormatNow, Response._id).subscribe(
                   ResponseNotif => {
-                    console.log('notificacion creada');
+
                   }
                 );
             }
@@ -262,7 +263,7 @@ export class AtencionComponent implements AfterViewInit, OnInit {
           }
         );
       } else {
-        console.log('ya valistes');
+
       }
 
     });
@@ -280,7 +281,7 @@ export class AtencionComponent implements AfterViewInit, OnInit {
         this.ngOnInit();
         this.ngAfterViewInit();
       } else {
-        console.log('ya valistes');
+
       }
     });
 
@@ -301,7 +302,7 @@ export class AtencionComponent implements AfterViewInit, OnInit {
             this.notifTitulo, this.notifText, this.atencion.paciente._id,
             this.horaFormatNow, this.fechaFormatNow, Response._id).subscribe(
               ResponseNotif => {
-                console.log('notificacion creada');
+
               }
             );
         }

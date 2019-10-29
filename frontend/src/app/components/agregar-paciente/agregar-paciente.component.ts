@@ -69,7 +69,6 @@ export class AgregarPacienteComponent implements OnInit {
 
       this.pacienteService.createPaciente(this.userLog.token, this.objeto).subscribe(
         Response => {
-          console.log(Response);
         },
         Error => {
           this.snackBar.open(Error.error.Error, 'X', {

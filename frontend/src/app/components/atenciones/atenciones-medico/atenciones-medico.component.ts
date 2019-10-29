@@ -2,7 +2,6 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { AtencionService } from 'src/app/services/atencion.service';
 import { DataTableAtencionesDataSource } from '../atenciones-datasource';
 import { MatTable, MatSort, MatPaginator } from '@angular/material';
-import { CalendarioService } from 'src/app/services/calendario.service';
 
 @Component({
   selector: 'app-atenciones-medico',
@@ -24,8 +23,7 @@ export class AtencionesMedicoComponent implements AfterViewInit, OnInit {
   public displayedColumnsHist = ['fecha', 'hora', 'rut', 'paciente', 'estado'];
 
   constructor(
-    private atencionService: AtencionService,
-    private calendarioService: CalendarioService
+    private atencionService: AtencionService
   ) { }
 
   ngOnInit() {
@@ -41,17 +39,6 @@ export class AtencionesMedicoComponent implements AfterViewInit, OnInit {
         this.dataSourceHist.paginator = this.paginatorHist;
         this.tableHist.dataSource = this.dataSourceHist;
       });
-  }
-
-  createIcsFile() {
-    this.calendarioService.createEvent().subscribe(
-      Response => {
-        console.log(Response);
-      },
-      Error => {
-        console.log(Error.error.Error);
-      }
-    );
   }
 
 }

@@ -24,8 +24,8 @@ export interface DataTableFichaItem {
 })
 
 export class MedicoService {
-  // public url = 'http://localhost:4000/';
-  public url = 'http://3.82.93.105:4000/';
+  public url = 'http://localhost:4000/';
+  // public url = 'http://184.72.128.142:4000/';
 
   constructor(
     private http: HttpClient

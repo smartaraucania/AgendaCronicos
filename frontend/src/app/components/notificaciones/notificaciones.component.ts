@@ -22,14 +22,14 @@ export class NotificacionesComponent implements OnInit {
     if (this.userLog.rol === 2) {
       this.notificacionService.getNotificacionesPaciente(this.userLog.token).subscribe(
         Response => {
-          console.log(Response);
+
           this.notificaciones = Response;
         }
       );
     } else if (this.userLog.rol === 1) {
       this.notificacionService.getNotificacionesDoctor(this.userLog.token).subscribe(
         Response => {
-          console.log(Response);
+
           this.notificaciones = Response;
         }
       );

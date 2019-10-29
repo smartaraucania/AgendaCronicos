@@ -30,8 +30,21 @@
       font-weight: normal;
     }
     
+    .separate {
+      margin-bottom: 8px;
+    }
+
+    .tabulation {
+      margin-left: 6px;
+    }
+
     .mobile-data {
       font-weight: bold;
+    }
+
+    .mobile-subdata{
+      font-weight: bold;
+      font-style: italic;
     }
 
     .mat-header-row {

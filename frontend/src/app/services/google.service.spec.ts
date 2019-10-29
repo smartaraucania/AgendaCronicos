@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CalendarioService } from './calendario.service';
+import { GoogleService } from './google.service';
 
-describe('CalendarioService', () => {
+describe('GoogleService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: CalendarioService = TestBed.get(CalendarioService);
+    const service: GoogleService = TestBed.get(GoogleService);
     expect(service).toBeTruthy();
   });
 });
