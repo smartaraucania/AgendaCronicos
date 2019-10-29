@@ -31,4 +31,8 @@ ionic cordova build **PLATAFORMA** --verbose
   - android
   - ios
 
+## **Funcionalidades faltantes**
+- Validaciones de formularios
+- Eliminar eventos de google calendar
+- Configuración de usuario
 
