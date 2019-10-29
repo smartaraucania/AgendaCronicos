@@ -25,4 +25,10 @@
 1. Instalar dependencias (**npm install**)
 2. Ejecutar el proyecto (**ionic lab --ssl true**) **--ssl true se utiliza ya que los servicios de google no permiten el uso de dominios que no sean https.
 
+#### Creacion apk 
+ionic cordova build PLATAFORMA --verbose
+PLATAFORMA
+  - android
+  - ios
+
 
