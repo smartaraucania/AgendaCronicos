@@ -27,8 +27,8 @@
 
 #### Creacion apk 
 ionic cordova build PLATAFORMA --verbose
-  - PLATAFORMA
-  -- android
+  > PLATAFORMA
+  - android
   - ios
 
 
