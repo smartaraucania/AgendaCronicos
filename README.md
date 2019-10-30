@@ -16,7 +16,7 @@
 
 #### Wiki backend
 
-Disponible en: https://github.com/smartaraucania/AgendaCronicos/wiki/%5BBackend%5D-Cesfam
+Disponible en: https://github.com/smartaraucania/AgendaCronicos/wiki
 
 ## **Frontend**
 
