@@ -14,7 +14,7 @@
 1. Instalar dependencias (**npm install**)
 2. Ejecutar el proyecto (**npm start**)
 
-#### Wiki backend
+#### Wiki backend ( en desarrollo)
 
 Disponible en: https://github.com/smartaraucania/AgendaCronicos/wiki
 
