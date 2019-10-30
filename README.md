@@ -14,6 +14,10 @@
 1. Instalar dependencias (**npm install**)
 2. Ejecutar el proyecto (**npm start**)
 
+#### Wiki backend
+
+Disponible en: https://github.com/smartaraucania/AgendaCronicos/wiki/%5BBackend%5D-Cesfam
+
 ## **Frontend**
 
 #### Frontend desarrollado con angular 8 y ionic
